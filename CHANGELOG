@@ -1,0 +1,4 @@
+v0.0.12
+    - Fixed missing 'light_rain' ASCII art
+    - Fixed name 'light_rain' is not defined
+    - Added Mist ASCII art
