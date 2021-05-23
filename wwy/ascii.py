@@ -1,14 +1,16 @@
 from wwy.colours import *
 
 
-overcast_cloud = [
-    '{}  .-.     {}'.format(BGREY, RESET),
-    '{} (   ).-. {}'.format(BGREY, RESET),
-    '{}(________){}'.format(BGREY, RESET)
+clear_sky = [
+    '{}    \\   /   {}'.format(BYELLOW, RESET),
+    '{}     .-.     {}'.format(BYELLOW, RESET),
+    '{}  ‒ (   ) ‒  {}'.format(BYELLOW, RESET),
+    '{}     `-᾿     {}'.format(BYELLOW, RESET),
+    '{}    /   \\   {}'.format(BYELLOW, RESET)
 ]
 
 
-scattered_cloud = [
+few_clouds = [
     '{}   \\  /      {}'.format(BYELLOW, RESET),
     '{} _ /\"\"{}.-.     {}'.format(BYELLOW, BWHITE, RESET),
     '{}   \\{}_(   ).-. {}'.format(BYELLOW, BWHITE, RESET),
@@ -16,12 +18,10 @@ scattered_cloud = [
 ]
 
 
-clear_sky = [
-    '{}    \\   /   {}'.format(BYELLOW, RESET),
-    '{}     .-.     {}'.format(BYELLOW, RESET),
-    '{}  ‒ (   ) ‒  {}'.format(BYELLOW, RESET),
-    '{}     `-᾿     {}'.format(BYELLOW, RESET),
-    '{}    /   \\   {}'.format(BYELLOW, RESET)
+overcast_cloud = [
+    '{}  .-.     {}'.format(BGREY, RESET),
+    '{} (   ).-. {}'.format(BGREY, RESET),
+    '{}(________){}'.format(BGREY, RESET)
 ]
 
 
@@ -34,6 +34,15 @@ rain = [
 ]
 
 
+thunderstorm = [
+    '{}  .-.     {}'.format(BGREY, RESET),
+    '{} (   ).-. {}'.format(BGREY, RESET),
+    '{}(________){}'.format(BGREY, RESET),
+    '{}‚ʻ{}⚡{}ʻ‚{}⚡{}‚ʻ{}'.format(BBLUE, BYELLOW, BBLUE, BYELLOW, BBLUE, RESET),
+    '{}‚ʻ‚ʻ{}⚡{}ʻ‚ʻ {}'.format(BBLUE, BYELLOW, BBLUE, RESET)
+]
+
+
 snow = [
     '  .-.     '.format(BGREY, RESET),
     ' (   ).-. '.format(BGREY, RESET),
@@ -43,10 +52,8 @@ snow = [
 ]
 
 
-thunder_rain = [
-    '{}  .-.     {}'.format(BGREY, RESET),
-    '{} (   ).-. {}'.format(BGREY, RESET),
-    '{}(________){}'.format(BGREY, RESET),
-    '{}‚ʻ{}⚡{}ʻ‚{}⚡{}‚ʻ{}'.format(BBLUE, BYELLOW, BBLUE, BYELLOW, BBLUE, RESET),
-    '{}‚ʻ‚ʻ{}⚡{}ʻ‚ʻ {}'.format(BBLUE, BYELLOW, BBLUE, RESET)
+mist = [
+    ' _ - _ - _ - '.format(BGREY, RESET),
+    '  _ - _ - _  '.format(BGREY, RESET),
+    ' _ - _ - _ - '.format(BGREY, RESET)
 ]

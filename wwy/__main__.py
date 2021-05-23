@@ -30,7 +30,8 @@ from wwy.ascii import *
 
 
 def get_weather_info(city):
-    url     = 'https://api.openweathermap.org/data/2.5/weather?q={}&appid={}&units=metric'.format(city, KEY)
+    url     = 'https://api.openweathermap.org/data/2.5/weather?'\
+            'q={}&appid={}&units=metric'.format(city, KEY)
     req     = requests.get(url)
     data    = req.json()
     
@@ -57,25 +58,34 @@ def get_weather_info(city):
 def get_ascii(info):
     weather = info[5]
     
-    if 'Overcast Clouds' in weather or 'Broken Clouds' in weather:
-        for i in range(len(overcast_cloud)):
-            print('\t{}{}{}'.format(WHITE, overcast_cloud[i], RESET))
+    if 'Clear Sky' in weather:
+        for i in range(len(clear_sky)):
+            print('\t{}{}{}'.format(WHITE, clear_sky[i], RESET))
             
-    if 'Few Clouds' in weather or 'Scattered Clouds' in weather:
+    if 'Few Clouds' in weather:
         for i in range(len(scattered_cloud)):
             print('\t{}{}{}'.format(WHITE, scattered_cloud[i], RESET))
             
-    if 'Rain' in weather:
-        for i in range(len(light_rain)):
-            print('\t{}{}{}'.format(WHITE, light_rain[i], RESET))
+    if ('Overcast Clouds' in weather or 'Broken Clouds' in weather or
+        'Scattered Clouds' in weather):
+        for i in range(len(overcast_cloud)):
+            print('\t{}{}{}'.format(WHITE, overcast_cloud[i], RESET))
             
-    if 'Sky' in weather:
-        for i in range(len(clear_sky)):
-            print('\t{}{}{}'.format(WHITE, clear_sky[i], RESET))
+    if 'Rain' in weather:
+        for i in range(len(rain)):
+            print('\t{}{}{}'.format(WHITE, rain[i], RESET))
+            
+    if 'Thunderstorm' in weather:
+        for i in range(len(thunderstorm)):
+            print('\t{}{}{}'.format(WHITE, thunderstorm[i], RESET))
     
     if 'Snow' in weather:
-        for i in range(len(light_snow)):
-            print('\t{}{}{}'.format(WHITE, light_snow[i], RESET))
+        for i in range(len(snow)):
+            print('\t{}{}{}'.format(WHITE, snow[i], RESET))
+            
+    if 'Mist' in weather:
+        for i in range(len(mist)):
+            print('\t{}{}{}'.format(WHITE, mist[i], RESET))
             
             
 def main():
