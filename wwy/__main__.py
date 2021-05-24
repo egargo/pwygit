@@ -67,11 +67,11 @@ def get_ascii(info):
     if 'Clear Sky' in weather:
         return clear_sky
             
-    if 'Few Clouds' in weather:
-        return scattered_cloud
-            
-    if ('Overcast Clouds' in weather or 'Broken Clouds' in weather or
+    if ('Few Clouds' in weather or 'Broken Clouds' in weather or
         'Scattered Clouds' in weather):
+        return few_clouds
+            
+    if 'Overcast Cloud':
         return overcast_cloud
             
     if 'Rain' in weather:
