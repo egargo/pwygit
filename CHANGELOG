@@ -1,3 +1,8 @@
+v0.1.0
+    - Added -u parameter for the units (metric, imperial)
+    - Changed the city name from optional argument to positional argument
+
+
 v0.0.12
     - Fixed missing 'light_rain' ASCII art
     - Fixed name 'light_rain' is not defined

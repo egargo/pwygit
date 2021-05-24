@@ -7,7 +7,7 @@ README = (HERE / 'README.md').read_text()
 
 setup(
     name='wwy',
-    version='0.0.12',
+    version='0.1.0',
     description='A simple weather information tool',
     long_description=README,
     long_description_content_type='text/markdown',

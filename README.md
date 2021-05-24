@@ -9,7 +9,7 @@ A simple weather tool.
 
 
 ## Installation
-```bash
+```shell
 # Unix-like
 pip3 install wwy
 
@@ -19,12 +19,24 @@ pip install wwy
 
 
 ## Usage
-```bash
-# wwy -c <city name>
-wwy -c tokyo
+```shell
+# wwy <city name>
+wwy tokyo
 
-# wwy -c <city name,county>
-wwy -c tokyo,jp
+# wwy <city name,county>
+wwy tokyo,jp
+
+# wwy <city name> -u <unit>
+wwy tokyo -u imperial
+```
+
+## Update
+```shell
+# Unix-like
+pip3 install --upgrade wwy
+
+# Windows
+pip install --upgrade wwy
 ```
 
 ## Credits
@@ -32,4 +44,4 @@ wwy -c tokyo,jp
 * [wego](https://github.com/schachmat/wego) - ASCII art
 
 ## License
-Made by [Clint E](https://github.com/clieg). This program is provided under the [GPL-3.0 License](https://github.com/clieg/xxxii/blob/master/LICENSE).
+Made by [Clint E](https://github.com/clieg). This program is provided under the [GPL-3.0 License](https://github.com/clieg/wwy/blob/master/LICENSE).
