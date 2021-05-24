@@ -32,29 +32,27 @@ from wwy.ascii import *
 def get_weather_info(city, unit):
     # Get the data from the API.
     
-    url     = 'https://api.openweathermap.org/data/2.5/weather?'\
-            'q={}&appid={}&units={}'.format(city, KEY, unit)
-    req     = requests.get(url)
-    data    = req.json()
+    url = f"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={KEY}&units={unit}"
+    req = requests.get(url)
+    data = req.json()
     
     try:
-        name        = data['name']
-        country     = data['sys']['country']
-        temp        = data['main']['temp']
-        feels_like  = data['main']['feels_like']
-        main        = data['weather'][0]['main']
+        name = data['name']
+        country = data['sys']['country']
+        temp = data['main']['temp']
+        feels_like = data['main']['feels_like']
+        main = data['weather'][0]['main']
         description = data['weather'][0]['description'].title()
-        pressure    = data['main']['pressure']
-        humidity    = data['main']['humidity']
-        speed       = data['wind']['speed']
-        visibility  = data['visibility']
+        pressure = data['main']['pressure']
+        humidity = data['main']['humidity']
+        speed = data['wind']['speed']
+        visibility = data['visibility']
         
         return (name, country, temp, feels_like, main, description, pressure,
             humidity, speed, visibility, unit)
             
     except KeyError:
-        print('{}Invalid input. See'\
-            'wwy -h for more information. {}'.format(YELLOW, city, RESET))
+        print(f"{YELLOW}Invalid input. See wwy -h for more information. {city}")
         sys.exit(1)
     
     
@@ -107,14 +105,15 @@ def display_weather_info(info):
     ascii = get_ascii(info)
     units = get_units(info)
     
-    for i in range(len(ascii)):
-        print('\t{}{}{}'.format(WHITE, ascii[i], RESET))
+    for line in ascii:
+        print(f"\t{WHITE}{line}{RESET}")
+
     
     # Print the weather information.
-    print('\t{}{}, {}{}'.format(BWHITE, info[0], info[1], RESET))
-    print('\t{}{}°{}{}'.format(BWHITE, info[2], units, RESET))
-    print('\t{}Feels like {}°{}. {}. {}{}'.format(WHITE, info[3], units, info[4], info[5], RESET))
-    print('\t{}Pressure: {}hPa\tHumidity: {}%\tVisibility: {}km{}'.format(WHITE, info[6], info[7], info[8], RESET))
+    print(f"\t{BWHITE}{info[0]}, {info[1]}{RESET}")
+    print(f"\t{BWHITE}{info[2]}°{units}{RESET}")
+    print(f"\t{WHITE}Feels like {info[3]}°{units}. {info[4]}. {info[5]}{RESET}")
+    print(f"\t{WHITE}Pressure: {info[6]}hPa\tHumidity: {info[7]}%\tVisibility: {info[8]}km{RESET}")
             
             
 def main():
@@ -123,8 +122,8 @@ def main():
     
     parser = argparse.ArgumentParser()
     
-    parser.add_argument('city', nargs = '+', help = 'Input city name')
-    parser.add_argument('-u', dest = 'unit', help = 'Input unit name')
+    parser.add_argument('city', nargs='+', help='Input city name')
+    parser.add_argument('-u', dest='unit', help='Input unit name')
     
     args = parser.parse_args()
     city = ' '.join(args.city)
