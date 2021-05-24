@@ -1,5 +1,10 @@
+v0.1.2
+     - Fixed the incorrect ASCII art
+
+
 v0.1.1
     - Minor fixes
+
 
 v0.1.0
     - Added -u parameter for the units (metric, imperial)
