@@ -1,3 +1,6 @@
+v0.1.1
+    - Minor fixes
+
 v0.1.0
     - Added -u parameter for the units (metric, imperial)
     - Changed the city name from optional argument to positional argument
