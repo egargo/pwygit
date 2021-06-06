@@ -23,6 +23,7 @@
 import sys
 import requests
 import argparse
+import time
 
 from pwy.key import KEY
 from pwy.colours import *
@@ -59,7 +60,7 @@ def get_weather_info(city, unit, lang):
             
         if '404' in req:
             print(f'{req}: Invalid input. '
-                f'See wy -h for more information.')
+                f'See pwy -h for more information.')
             
         if '429' in req:
             print(f'{req}: API calls per minute exceeded.')
@@ -79,26 +80,26 @@ def get_ascii(info):
         if lang == lang_list[index]:
             language = TRANSLATION.get(lang)
             
-            if weather in language[0]:
+            if weather == language[0]:
                 return clear_sky
             
-            if (weather in language[1] or weather in language[2]):
+            if (weather == language[1] or weather == language[2]):
                 return overcast_cloud
                 
-            if (weather in language[3] or weather in language[4]):
+            if (weather == language[3] or weather == language[4]):
                 return few_clouds
                 
-            if (weather in language[5] or weather in language[6]
-                or weather in language[7]):
+            if (weather == language[5] or weather == language[6]
+                or weather == language[7]):
                 return rain
                 
-            if weather in language[8]:
+            if weather == language[8]:
                 return thunderstorm
                 
-            if weather in language[9]:
+            if weather == language[9]:
                 return snow
                 
-            if weather in language[10]:
+            if weather == language[10]:
                 return mist
                 
             else:
@@ -117,33 +118,42 @@ def get_units(info):
         return (units[2], units[3])
         
         
+def get_localtime():
+    # Get the local time.
+    
+    local = time.time()
+    
+    return time.strftime('%H:%M %Z', time.localtime(local))
+    
+    
 def display_weather_info(info):
     # Invoke the get_ascii() function. Iterate through the list containing the
     # ASCII art and print it.
     # Invoke the get_units() function and print the temperature's measurement.
+    # Invoke the get_localtime function and print the local time.
     
     ascii = get_ascii(info)
     units = get_units(info)
+    local_time = get_localtime()
     
     # Print the weather information.
     print(f'\t{ascii[0]}  {BWHITE}{info[0]}, {info[1]}{RESET}')
     print(f'\t{ascii[1]}  Temperature: {GREEN}{info[2]}°{units[0]}{RESET}'
-        f' ({info[3]}°{units[0]})')
+          f' ({info[3]}°{units[0]})')
     print(f'\t{ascii[2]}  {info[4]}. {info[5]}')
     print(f'\t{ascii[3]}  Pressure: {GREEN}{info[6]}{RESET}hPa'
-        f'  Humidity: {GREEN}{info[7]}{RESET}%'
-        f'  Wind: {GREEN}{info[8]}{RESET}{units[1]}')
-    print(f'\t{ascii[4]}')
-    
-    sys.exit(0)
+          f'  Humidity: {GREEN}{info[7]}{RESET}%'
+          f'  Wind: {GREEN}{info[8]}{RESET}{units[1]}')
+    print(f'\t{ascii[4]}  Time: {local_time}')
             
             
 def main():
+    # Get arguments.
     # Metric system is used by default.
     # If unit is empty, use Metric system. Otherwise use Imperial system.
     
     parser = argparse.ArgumentParser(
-        description = 'wy - A simple weather tool.')
+        description = 'pwy - A simple weather tool.')
     
     parser.add_argument('city', nargs='+', help='Input city name')
     parser.add_argument('--unit', dest = 'unit', help='Input unit name')
