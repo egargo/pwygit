@@ -22,7 +22,8 @@
 
 import requests
 import argparse
-import time
+import datetime
+from datetime import timedelta
 
 from pwy.key import KEY
 from pwy.colours import *
@@ -47,9 +48,11 @@ def get_weather_info(city, unit, lang):
         pressure = data['main']['pressure']
         humidity = data['main']['humidity']
         speed = data['wind']['speed']
+        dt = data['timezone']
+        tz = data['dt']
         
         return (name, country, temp, feels_like, main, description, pressure,
-            humidity, speed, unit, lang)
+            humidity, speed, dt, tz, unit, lang)
             
     except:
         req = str(req)
@@ -63,6 +66,9 @@ def get_weather_info(city, unit, lang):
             
         if '429' in req:
             print(f'{req}: API calls per minute exceeded.')
+            
+        if '443' in req:
+            print(f'{req}: Max retries exceeded with url.')
     
     
 def get_ascii(info):
@@ -71,7 +77,7 @@ def get_ascii(info):
     # containing the weather ASCII art of the conditions are met.
     
     weather = info[5]
-    lang = info[10]
+    lang = info[12]
     
     for index in range(len(lang_list)):
         if lang == lang_list[index]:
@@ -109,18 +115,17 @@ def get_units(info):
     
     units = ['C', 'km/h', 'F', 'mph']
     
-    if info[9] == 'metric':
+    if info[11] == 'metric':
         return (units[0], units[1])
     else:
         return (units[2], units[3])
         
         
-def get_localtime():
+def get_localtime(info):
     # Get the local time and timezone.
     
-    local = time.time()
-    
-    return time.strftime('%H:%M %Z', time.localtime(local))
+    localtime = datetime.timezone(datetime.timedelta(seconds = (info[9])))
+    return datetime.datetime.now(tz = localtime).strftime('%H:%M %Z')
     
     
 def display_weather_info(info):
@@ -131,7 +136,7 @@ def display_weather_info(info):
     
     ascii = get_ascii(info)
     units = get_units(info)
-    local_time = get_localtime()
+    local_time = get_localtime(info)
     
     # Print the weather information.
     print(f'\t{ascii[0]}  {BWHITE}{info[0]}, {info[1]}{RESET}')
