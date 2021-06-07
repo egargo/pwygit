@@ -6,7 +6,7 @@ clear_sky = [
     '{}     .-.     {}'.format(BYELLOW, RESET),
     '{}  ‒ (   ) ‒  {}'.format(BYELLOW, RESET),
     '{}     `-᾿     {}'.format(BYELLOW, RESET),
-    '{}    /   \\   {}'.format(BYELLOW, RESET)
+    '{}    /   \\    {}'.format(BYELLOW, RESET)
 ]
 
 
@@ -15,7 +15,7 @@ few_clouds = [
     '{} _ /\"\"{}.-.     {}'.format(BYELLOW, BWHITE, RESET),
     '{}   \\{}_(   ).-. {}'.format(BYELLOW, BWHITE, RESET),
     '{}   /{}(________){}'.format(BYELLOW, BWHITE, RESET),
-    '                 '
+    '{}              {}'.format(BGREY, RESET)
 ]
 
 
