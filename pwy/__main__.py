@@ -2,7 +2,7 @@
 #
 #
 # pwy
-# Copyright (C) 2021, Clint <github.com/clieg>
+# Copyright (C) 2021, Clint <https://github.com/clieg>
 #
 # This is the main file of pwy
 #
@@ -20,7 +20,6 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
-import sys
 import requests
 import argparse
 import time
@@ -64,8 +63,6 @@ def get_weather_info(city, unit, lang):
             
         if '429' in req:
             print(f'{req}: API calls per minute exceeded.')
-            
-        sys.exit(1)
     
     
 def get_ascii(info):
@@ -119,7 +116,7 @@ def get_units(info):
         
         
 def get_localtime():
-    # Get the local time.
+    # Get the local time and timezone.
     
     local = time.time()
     
