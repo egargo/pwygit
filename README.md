@@ -7,11 +7,12 @@
     <a href="https://github.com/clieg/pwy/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-GPL&#8208;3.0-blue">
 </div>
 
-# Table of Contents
+## Table of Contents
 * [Dependencies](#dependencies)
 * [Installation](#installation)
 * [Usage](#usage)
 * [Update](#update)
+* [Changelog](#changelog)
 * [Credits](#credits)
 * [License](#license)
 
@@ -30,6 +31,7 @@ Windows
 ```bash
 pip install pwy
 ```
+
 
 ## Usage
 To display weather in your current city
@@ -65,10 +67,14 @@ pip install --upgrade pwy
 ```
 
 
+## Changelog
+View [Changelog](https://github.com/clieg/pwy/blob/master/CHANGELOG.md).
+
+
 ## Credits
 * [pwy Contributors](https://github.com/clieg/pwy/graphs/contributors)
 * [OpenWeatherMap](https://openweathermap.org/current) - API
 * [wego](https://github.com/schachmat/wego) - ASCII art
 
 ## License
-Made by [Clint E](https://github.com/clieg). This program is provided under the [GPL-3.0 License](https://github.com/clieg/pwy/blob/master/LICENSE).
+This program is provided under the [GPL-3.0 License](https://github.com/clieg/pwy/blob/master/LICENSE).
