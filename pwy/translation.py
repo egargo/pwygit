@@ -1,4 +1,4 @@
-lang_list = [
+LANGUAGES = [
     'en', 'af', 'al', 'ar', 'az', 'bg', 'ca', 'cz', 'da', 'de', 'el', 'eu',
     'fa', 'fi', 'fr', 'gl', 'he', 'hi', 'hr', 'hu', 'id', 'it', 'ja', 'kr',
     'la', 'lt', 'mk', 'no', 'nl', 'pl', 'pt', 'ro', 'ru', 'se', 'sk', 'sl',
@@ -9,7 +9,7 @@ lang_list = [
 
 # Weather translations are from OpenWeatherMap API
 # Don't change the layout.
-TRANSLATION = {
+TRANSLATIONS = {
     #           0                                    1                               2                           3                           4                       5                        6                                 7                   8        9             10
     #       Clear Sky                       Broken Clouds                   Overcast Clouds             Few Clouds                  Scattered Clouds            Light Rain                  Moderate Rain                   Heavy Rain      Thunderstorm    Snow        Mist
     'en': ('Clear Sky',                     'Broken Clouds',                'Overcast Clouds',          'Few Clouds',               'Scattered Clouds',         'Light Rain',               'Moderate Rain',                'Heavy Rain',   'Thunderstorm', 'Snow',     'Mist'),
