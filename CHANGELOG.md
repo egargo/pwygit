@@ -5,6 +5,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
+## Unreleased - 2021.06.11
+* Added `standard` unit (Kelvin).
+* Added text colour on the current time.
+* Minor code refactor:
+    * Changed pwy/translation.py: `lang_list` to `LANGUAGES`.
+
 ## 1.1.1 - 2021.06.08
 * Fixed the local time and time zone.
 * Minor ASCII art fix to match the new UI.
