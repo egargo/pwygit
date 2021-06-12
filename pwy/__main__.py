@@ -23,7 +23,7 @@ import datetime
 import sys
 
 from pwy.key import KEY
-from pwy.colours import *
+from pwy.colours import BWHITE, GREEN, RESET
 from pwy.ascii import *
 from pwy.translation import LANGUAGES, TRANSLATIONS
 
@@ -55,10 +55,8 @@ def get_weather_info(city, unit, lang):
         
         if '401' in req:
             print(f'Invalid API key.')
-            
         elif '404' in req:
             print(f'Invalid input. See pwy -h for more information.')
-            
         elif '429' in req or '443' in req:
             print(f'API calls per minute exceeded.')
 
@@ -120,19 +118,18 @@ def get_units(info):
 def get_localtime(info):
     # Get the local time and timezone.
 
-    localtime = datetime.timezone(datetime.timedelta(seconds = (info[9])))
-    return datetime.datetime.now(tz = localtime).strftime('%H:%M %Z')
+    timezone = datetime.timezone(datetime.timedelta(seconds = (info[9])))
+    return datetime.datetime.now(tz = timezone).strftime('%H:%M %Z')
 
 
 def display_weather_info(info):
-    # Invoke the get_ascii() function. Iterate through the list containing the
-    # ASCII art and print it.
+    # Invoke the get_ascii() function and print it by index.
     # Invoke the get_units() function and print the temperature's measurement.
     # Invoke the get_localtime function and print the local time.
 
     ascii = get_ascii(info)
     units = get_units(info)
-    local_time = get_localtime(info)
+    time = get_localtime(info)
     
     # Print the weather information.
     print(f'\t{ascii[0]}  {BWHITE}{info[0]}, {info[1]}{RESET}')
@@ -142,13 +139,13 @@ def display_weather_info(info):
     print(f'\t{ascii[3]}  Pressure: {GREEN}{info[6]}{RESET}hPa'
           f'  Humidity: {GREEN}{info[7]}{RESET}%'
           f'  Wind: {GREEN}{info[8]}{RESET}{units[1]}')
-    print(f'\t{ascii[4]}  Time: {GREEN}{local_time}{RESET}')
+    print(f'\t{ascii[4]}  Time: {GREEN}{time}{RESET}')
 
 
 def main():
     # Get arguments.
-    # Metric system is used by default.
-    # If unit is empty, use Metric system. Otherwise use Imperial system.
+    # Metric system is used by default. If unit is empty, use Metric system.
+    # Otherwise use Imperial system.
     
     parser = argparse.ArgumentParser(
         description = 'pwy - A simple weather tool.')
