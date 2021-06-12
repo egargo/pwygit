@@ -2,7 +2,7 @@ import pathlib
 from setuptools import setup
 
 
-__version__ = '1.2.0'
+__version__ = '1.2.1'
 __author__ = 'Clint'
 
 
@@ -28,6 +28,6 @@ setup(
     ],
     packages = ['pwy'],
     include_package_data = True,
-    install_requires = [],
+    install_requires = ['requests'],
     entry_points = {'console_scripts': ['pwy=pwy.__main__:main']},
 )
