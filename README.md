@@ -22,47 +22,53 @@
 
 
 ## Installation
-Unix-like
-```bash
+### Unix-like
+```sh
 pip3 install pwy
 ```
 
-Windows
-```bash
+### Windows
+```sh
 pip install pwy
 ```
 
 
 ## Usage
+### Unix-like
 To display weather in your current city
-```bash
+```sh
 pwy tokyo
 ```
 
 You can also specify what country you are in by
-```bash
+```sh
 pwy tokyo,jp
 ```
 
 To display weather with specific unit of measurement. By default the unit is Metric system.
-```bash
+```sh
 pwy tokyo --unit imperial
 ```
 
 To display weather with specific language.
-```bash
+```sh
 pwy tokyo --lang ja
+```
+
+### Windows
+```sh
+pwy tokyo,jp | Write-Host
 ```
 
 
 ## Update
 Unix-like
-```bash
+```sh
 pip3 install --upgrade pwy
 ```
 
 Windows
-```bash
+```sh
 pip install --upgrade pwy
 ```
 
