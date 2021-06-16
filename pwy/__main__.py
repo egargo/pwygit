@@ -30,15 +30,16 @@ from pwy.translation import LANGUAGES, TRANSLATIONS
 
 def get_weather_info(city, unit, lang):
     # Get the data from the API.
-    
-    url = f'https://api.openweathermap.org/data/2.5/weather?q={city}&appid={KEY}&units={unit}&lang={lang}'
-    
+
+    url = (f'https://api.openweathermap.org/data/2.5/weather?q={city}'
+           f'&appid={KEY}&units={unit}&lang={lang}')
+
     try:
         req = requests.get(url)
         req.raise_for_status()
     except requests.HTTPError:
         status = req.status_code
-        
+
         if status == 401:
             print(f'Invalid API key.')
         elif status == 404:
@@ -63,7 +64,7 @@ def get_weather_info(city, unit, lang):
         'unit': unit,
         'lang': lang
     }
-    
+
     return weather_info
 
 
@@ -71,46 +72,46 @@ def get_ascii(info):
     # Find the language. If the language is present, get the key of TRANSLATION
     # dictionary that matches the language and return the designated list
     # containing the weather ASCII art of the conditions are met.
-    
+
     weather = info['main']
     lang = info['lang']
-    
+
     if lang in LANGUAGES:
-            language = TRANSLATIONS.get(lang)
+        language = TRANSLATIONS.get(lang)
     else:
         return unknown
-            
-            if weather == language[0]:
-                return clear_sky
-            
+
+    if weather == language[0]:
+        return clear_sky
+
     elif weather in (language[1], language[2]):
-                return overcast_cloud
-                
+        return overcast_cloud
+
     elif weather in (language[3], language[4]):
-                return few_clouds
-                
+        return few_clouds
+
     elif weather in (language[5], language[6], language[7]):
-                return rain
-                
-            elif weather == language[8]:
-                return thunderstorm
-                
-            elif weather == language[9]:
-                return snow
-                
-            elif weather == language[10]:
-                return mist
-                
-            else:
-                return unknown
+        return rain
+
+    elif weather == language[8]:
+        return thunderstorm
+
+    elif weather == language[9]:
+        return snow
+
+    elif weather == language[10]:
+        return mist
+
+    else:
+        return unknown
 
 
 def get_units(info):
-    # If info['unit'] is equal to 'metric', return the first first and second index.
-    # Otherwise, return the second and third index.
+    # If info['unit'] is equal to 'metric', return the first first and second
+    # index. Otherwise, return the second and third index.
 
     units = ['°C', 'm/s', '°F', 'mph', 'K']
-    
+
     if info['unit'] == 'metric':
         return (units[0], units[1])
     elif info['unit'] == 'imperial':
@@ -122,8 +123,8 @@ def get_units(info):
 def get_localtime(info):
     # Get the local time and timezone.
 
-    timezone = datetime.timezone(datetime.timedelta(seconds = (info['timezone'])))
-    return datetime.datetime.now(tz = timezone).strftime('%H:%M %Z')
+    timezone = datetime.timezone(datetime.timedelta(seconds=info['timezone']))
+    return datetime.datetime.now(tz=timezone).strftime('%H:%M %Z')
 
 
 def display_weather_info(info):
@@ -134,7 +135,7 @@ def display_weather_info(info):
     ascii = get_ascii(info)
     units = get_units(info)
     time = get_localtime(info)
-    
+
     # Print the weather information.
     print(f'\t{ascii[0]}  {BWHITE}{info["name"]}, {info["country"]}{RESET}')
     print(f'\t{ascii[1]}  Temperature: {GREEN}{info["temp"]}{RESET}'
@@ -150,25 +151,27 @@ def main():
     # Get arguments.
     # Metric system is used by default. If unit is empty, use Metric system.
     # Otherwise use Imperial system.
-    
+
     parser = argparse.ArgumentParser(
-        description = 'pwy - A simple weather tool.')
-    
+        description='pwy - A simple weather tool.')
+
     parser.add_argument('city', nargs='+', help='Input city name')
-    parser.add_argument('--unit', dest = 'unit', metavar='', help='Input unit name')
-    parser.add_argument('--lang', dest = 'language', metavar='', help='Input language')
-    
+    parser.add_argument('--unit', dest='unit', metavar='',
+                        help='Input unit name')
+    parser.add_argument('--lang', dest='language', metavar='',
+                        help='Input language')
+
     args = parser.parse_args()
-    
+
     city = ' '.join(args.city)
     unit = args.unit
     lang = args.language
-    
+
     if unit is None:
         unit = 'metric'
     if lang is None:
         lang = 'en'
-    
+
     info = get_weather_info(city, unit, lang)
     display_weather_info(info)
 
