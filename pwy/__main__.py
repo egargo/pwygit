@@ -66,6 +66,7 @@ def get_weather_info(city, unit, lang):
     
     return weather_info
 
+
 def get_ascii(info):
     # Find the language. If the language is present, get the key of TRANSLATION
     # dictionary that matches the language and return the designated list
@@ -74,21 +75,21 @@ def get_ascii(info):
     weather = info['main']
     lang = info['lang']
     
-    for index in range(len(LANGUAGES)):
-        if lang == LANGUAGES[index]:
+    if lang in LANGUAGES:
             language = TRANSLATIONS.get(lang)
+    else:
+        return unknown
             
             if weather == language[0]:
                 return clear_sky
             
-            elif (weather == language[1] or weather == language[2]):
+    elif weather in (language[1], language[2]):
                 return overcast_cloud
                 
-            elif (weather == language[3] or weather == language[4]):
+    elif weather in (language[3], language[4]):
                 return few_clouds
                 
-            elif (weather == language[5] or weather == language[6]
-                or weather == language[7]):
+    elif weather in (language[5], language[6], language[7]):
                 return rain
                 
             elif weather == language[8]:
