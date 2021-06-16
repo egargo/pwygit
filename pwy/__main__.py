@@ -51,13 +51,13 @@ def get_weather_info(city, unit, lang):
             humidity, speed, timezone, unit, lang)
             
     except:
-        req = str(req)
+        status = req.status_code
         
-        if '401' in req:
+        if status == 401:
             print(f'Invalid API key.')
-        elif '404' in req:
+        elif status == 404:
             print(f'Invalid input. See pwy -h for more information.')
-        elif '429' in req or '443' in req:
+        elif status in (429, 443):
             print(f'API calls per minute exceeded.')
 
         sys.exit(1)
