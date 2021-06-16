@@ -32,25 +32,11 @@ def get_weather_info(city, unit, lang):
     # Get the data from the API.
     
     url = f'https://api.openweathermap.org/data/2.5/weather?q={city}&appid={KEY}&units={unit}&lang={lang}'
-    req = requests.get(url)
-    data = req.json()
     
     try:
-        name = data['name']
-        country = data['sys']['country']
-        temp = data['main']['temp']
-        feels_like = data['main']['feels_like']
-        main = data['weather'][0]['main']
-        description = data['weather'][0]['description'].title()
-        pressure = data['main']['pressure']
-        humidity = data['main']['humidity']
-        speed = data['wind']['speed']
-        timezone = data['timezone']
-        
-        return (name, country, temp, feels_like, main, description, pressure,
-            humidity, speed, timezone, unit, lang)
-            
-    except:
+        req = requests.get(url)
+        req.raise_for_status()
+    except requests.HTTPError:
         status = req.status_code
         
         if status == 401:
@@ -62,14 +48,31 @@ def get_weather_info(city, unit, lang):
 
         sys.exit(1)
 
+    data = req.json()
+    weather_info = {
+        'name': data['name'],
+        'country': data['sys']['country'],
+        'temp': data['main']['temp'],
+        'feels_like': data['main']['feels_like'],
+        'main': data['weather'][0]['main'],
+        'description': data['weather'][0]['description'].title(),
+        'pressure': data['main']['pressure'],
+        'humidity': data['main']['humidity'],
+        'speed': data['wind']['speed'],
+        'timezone': data['timezone'],
+        'unit': unit,
+        'lang': lang
+    }
+    
+    return weather_info
 
 def get_ascii(info):
     # Find the language. If the language is present, get the key of TRANSLATION
     # dictionary that matches the language and return the designated list
     # containing the weather ASCII art of the conditions are met.
     
-    weather = info[5]
-    lang = info[11]
+    weather = info['main']
+    lang = info['lang']
     
     for index in range(len(LANGUAGES)):
         if lang == LANGUAGES[index]:
@@ -102,14 +105,14 @@ def get_ascii(info):
 
 
 def get_units(info):
-    # If info[9] is equal to 'metric', return the first first and second index.
+    # If info['unit'] is equal to 'metric', return the first first and second index.
     # Otherwise, return the second and third index.
 
     units = ['°C', 'm/s', '°F', 'mph', 'K']
     
-    if info[10] == 'metric':
+    if info['unit'] == 'metric':
         return (units[0], units[1])
-    elif info[10] == 'imperial':
+    elif info['unit'] == 'imperial':
         return (units[2], units[3])
     else:
         return (units[4], units[1])
@@ -118,7 +121,7 @@ def get_units(info):
 def get_localtime(info):
     # Get the local time and timezone.
 
-    timezone = datetime.timezone(datetime.timedelta(seconds = (info[9])))
+    timezone = datetime.timezone(datetime.timedelta(seconds = (info['timezone'])))
     return datetime.datetime.now(tz = timezone).strftime('%H:%M %Z')
 
 
@@ -132,13 +135,13 @@ def display_weather_info(info):
     time = get_localtime(info)
     
     # Print the weather information.
-    print(f'\t{ascii[0]}  {BWHITE}{info[0]}, {info[1]}{RESET}')
-    print(f'\t{ascii[1]}  Temperature: {GREEN}{info[2]}{RESET}'
-          f' ({info[3]}) {units[0]}')
-    print(f'\t{ascii[2]}  {info[4]}. {info[5]}')
-    print(f'\t{ascii[3]}  Pressure: {GREEN}{info[6]}{RESET}hPa'
-          f'  Humidity: {GREEN}{info[7]}{RESET}%'
-          f'  Wind: {GREEN}{info[8]}{RESET}{units[1]}')
+    print(f'\t{ascii[0]}  {BWHITE}{info["name"]}, {info["country"]}{RESET}')
+    print(f'\t{ascii[1]}  Temperature: {GREEN}{info["temp"]}{RESET}'
+          f' ({info["feels_like"]}) {units[0]}')
+    print(f'\t{ascii[2]}  {info["main"]}. {info["description"]}')
+    print(f'\t{ascii[3]}  Pressure: {GREEN}{info["pressure"]}{RESET}hPa'
+          f'  Humidity: {GREEN}{info["humidity"]}{RESET}%'
+          f'  Wind: {GREEN}{info["speed"]}{RESET}{units[1]}')
     print(f'\t{ascii[4]}  Time: {GREEN}{time}{RESET}')
 
 
