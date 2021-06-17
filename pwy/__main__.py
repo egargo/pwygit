@@ -30,86 +30,90 @@ from pwy.translation import LANGUAGES, TRANSLATIONS
 
 def get_weather_info(city, unit, lang):
     # Get the data from the API.
-    
-    url = f'https://api.openweathermap.org/data/2.5/weather?q={city}&appid={KEY}&units={unit}&lang={lang}'
-    req = requests.get(url)
-    data = req.json()
-    
+
+    url = (f'https://api.openweathermap.org/data/2.5/weather?q={city}'
+           f'&appid={KEY}&units={unit}&lang={lang}')
+
     try:
-        name = data['name']
-        country = data['sys']['country']
-        temp = data['main']['temp']
-        feels_like = data['main']['feels_like']
-        main = data['weather'][0]['main']
-        description = data['weather'][0]['description'].title()
-        pressure = data['main']['pressure']
-        humidity = data['main']['humidity']
-        speed = data['wind']['speed']
-        timezone = data['timezone']
-        
-        return (name, country, temp, feels_like, main, description, pressure,
-            humidity, speed, timezone, unit, lang)
-            
-    except:
-        req = str(req)
-        
-        if '401' in req:
+        req = requests.get(url)
+        req.raise_for_status()
+    except requests.HTTPError:
+        status = req.status_code
+
+        if status == 401:
             print(f'Invalid API key.')
-        elif '404' in req:
+        elif status == 404:
             print(f'Invalid input. See pwy -h for more information.')
-        elif '429' in req or '443' in req:
+        elif status in (429, 443):
             print(f'API calls per minute exceeded.')
 
         sys.exit(1)
 
+    data = req.json()
+    weather_info = {
+        'name': data['name'],
+        'country': data['sys']['country'],
+        'temp': data['main']['temp'],
+        'feels_like': data['main']['feels_like'],
+        'main': data['weather'][0]['main'],
+        'description': data['weather'][0]['description'].title(),
+        'pressure': data['main']['pressure'],
+        'humidity': data['main']['humidity'],
+        'speed': data['wind']['speed'],
+        'timezone': data['timezone'],
+        'unit': unit,
+        'lang': lang
+    }
+
+    return weather_info
+
 
 def get_ascii(info):
-    # Find the language. If the language is present, get the key of TRANSLATION
-    # dictionary that matches the language and return the designated list
+    # If the language is present, return the designated list
     # containing the weather ASCII art of the conditions are met.
-    
-    weather = info[5]
-    lang = info[11]
-    
-    for index in range(len(LANGUAGES)):
-        if lang == LANGUAGES[index]:
-            language = TRANSLATIONS.get(lang)
-            
-            if weather == language[0]:
-                return clear_sky
-            
-            elif (weather == language[1] or weather == language[2]):
-                return overcast_cloud
-                
-            elif (weather == language[3] or weather == language[4]):
-                return few_clouds
-                
-            elif (weather == language[5] or weather == language[6]
-                or weather == language[7]):
-                return rain
-                
-            elif weather == language[8]:
-                return thunderstorm
-                
-            elif weather == language[9]:
-                return snow
-                
-            elif weather == language[10]:
-                return mist
-                
-            else:
-                return unknown
+
+    weather = info['description']
+    lang = info['lang']
+
+    if lang in LANGUAGES:
+        language = TRANSLATIONS.get(lang)
+    else:
+        return
+
+    if weather == language[0]:
+        return clear_sky
+
+    elif weather in (language[1], language[2]):
+        return overcast_cloud
+
+    elif weather in (language[3], language[4]):
+        return few_clouds
+
+    elif weather in (language[5], language[6], language[7]):
+        return rain
+
+    elif weather == language[8]:
+        return thunderstorm
+
+    elif weather == language[9]:
+        return snow
+
+    elif weather == language[10]:
+        return mist
+
+    else:
+        return unknown
 
 
 def get_units(info):
-    # If info[9] is equal to 'metric', return the first first and second index.
-    # Otherwise, return the second and third index.
+    # If info['unit'] is equal to 'metric', return the first first and second
+    # index. Otherwise, return the second and third index.
 
     units = ['°C', 'm/s', '°F', 'mph', 'K']
-    
-    if info[10] == 'metric':
+
+    if info['unit'] == 'metric':
         return (units[0], units[1])
-    elif info[10] == 'imperial':
+    elif info['unit'] == 'imperial':
         return (units[2], units[3])
     else:
         return (units[4], units[1])
@@ -118,8 +122,8 @@ def get_units(info):
 def get_localtime(info):
     # Get the local time and timezone.
 
-    timezone = datetime.timezone(datetime.timedelta(seconds = (info[9])))
-    return datetime.datetime.now(tz = timezone).strftime('%H:%M %Z')
+    timezone = datetime.timezone(datetime.timedelta(seconds=info['timezone']))
+    return datetime.datetime.now(tz=timezone).strftime('%H:%M %Z')
 
 
 def display_weather_info(info):
@@ -130,15 +134,15 @@ def display_weather_info(info):
     ascii = get_ascii(info)
     units = get_units(info)
     time = get_localtime(info)
-    
+
     # Print the weather information.
-    print(f'\t{ascii[0]}  {BWHITE}{info[0]}, {info[1]}{RESET}')
-    print(f'\t{ascii[1]}  Temperature: {GREEN}{info[2]}{RESET}'
-          f' ({info[3]}) {units[0]}')
-    print(f'\t{ascii[2]}  {info[4]}. {info[5]}')
-    print(f'\t{ascii[3]}  Pressure: {GREEN}{info[6]}{RESET}hPa'
-          f'  Humidity: {GREEN}{info[7]}{RESET}%'
-          f'  Wind: {GREEN}{info[8]}{RESET}{units[1]}')
+    print(f'\t{ascii[0]}  {BWHITE}{info["name"]}, {info["country"]}{RESET}')
+    print(f'\t{ascii[1]}  Temperature: {GREEN}{info["temp"]}{RESET}'
+          f' ({info["feels_like"]}) {units[0]}')
+    print(f'\t{ascii[2]}  {info["main"]}. {info["description"]}')
+    print(f'\t{ascii[3]}  Pressure: {GREEN}{info["pressure"]}{RESET}hPa'
+          f'  Humidity: {GREEN}{info["humidity"]}{RESET}%'
+          f'  Wind: {GREEN}{info["speed"]}{RESET}{units[1]}')
     print(f'\t{ascii[4]}  Time: {GREEN}{time}{RESET}')
 
 
@@ -146,25 +150,27 @@ def main():
     # Get arguments.
     # Metric system is used by default. If unit is empty, use Metric system.
     # Otherwise use Imperial system.
-    
+
     parser = argparse.ArgumentParser(
-        description = 'pwy - A simple weather tool.')
-    
+        description='pwy - A simple weather tool.')
+
     parser.add_argument('city', nargs='+', help='Input city name')
-    parser.add_argument('--unit', dest = 'unit', metavar='', help='Input unit name')
-    parser.add_argument('--lang', dest = 'language', metavar='', help='Input language')
-    
+    parser.add_argument('--unit', dest='unit', metavar='',
+                        help='Input unit name')
+    parser.add_argument('--lang', dest='language', metavar='',
+                        help='Input language')
+
     args = parser.parse_args()
-    
+
     city = ' '.join(args.city)
     unit = args.unit
     lang = args.language
-    
+
     if unit is None:
         unit = 'metric'
     if lang is None:
         lang = 'en'
-    
+
     info = get_weather_info(city, unit, lang)
     display_weather_info(info)
 
