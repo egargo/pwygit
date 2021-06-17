@@ -72,7 +72,7 @@ def get_ascii(info):
     # If the language is present, return the designated list
     # containing the weather ASCII art of the conditions are met.
 
-    weather = info['main']
+    weather = info['description']
     lang = info['lang']
 
     if lang in LANGUAGES:
