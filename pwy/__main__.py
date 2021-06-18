@@ -22,10 +22,11 @@ import argparse
 import datetime
 import sys
 
-from pwy.key import KEY
-from pwy.colours import BWHITE, GREEN, RESET
-from pwy.ascii import *
-from pwy.translation import LANGUAGES, TRANSLATIONS
+from key import KEY
+from colours import BWHITE, GREEN, RESET
+from ascii import clear_sky, few_clouds, overcast_cloud, rain, thunderstorm, \
+                    snow, mist, unknown
+from translation import LANGUAGES, TRANSLATIONS
 
 
 def get_weather_info(city, unit, lang):
@@ -39,7 +40,6 @@ def get_weather_info(city, unit, lang):
         req.raise_for_status()
     except requests.HTTPError:
         status = req.status_code
-
         if status == 401:
             print(f'Invalid API key.')
         elif status == 404:
@@ -50,6 +50,7 @@ def get_weather_info(city, unit, lang):
         sys.exit(1)
 
     data = req.json()
+
     weather_info = {
         'name': data['name'],
         'country': data['sys']['country'],
@@ -60,6 +61,7 @@ def get_weather_info(city, unit, lang):
         'pressure': data['main']['pressure'],
         'humidity': data['main']['humidity'],
         'speed': data['wind']['speed'],
+        'deg': data['wind']['deg'],
         'timezone': data['timezone'],
         'unit': unit,
         'lang': lang
@@ -82,25 +84,18 @@ def get_ascii(info):
 
     if weather == language[0]:
         return clear_sky
-
     elif weather in (language[1], language[2]):
         return overcast_cloud
-
     elif weather in (language[3], language[4]):
         return few_clouds
-
     elif weather in (language[5], language[6], language[7]):
         return rain
-
     elif weather == language[8]:
         return thunderstorm
-
     elif weather == language[9]:
         return snow
-
     elif weather == language[10]:
         return mist
-
     else:
         return unknown
 
@@ -126,14 +121,19 @@ def get_localtime(info):
     return datetime.datetime.now(tz=timezone).strftime('%H:%M %Z')
 
 
-def display_weather_info(info):
-    # Invoke the get_ascii() function and print it by index.
-    # Invoke the get_units() function and print the temperature's measurement.
-    # Invoke the get_localtime function and print the local time.
+def get_wind_direction(info):
+    # Get the wind direction.
 
+    arrows = ['↓', '↙', '←', '↖', '↑', '↗', '→', '↘']
+    direction = int((info['deg'] + 11.25) / 45)
+    return arrows[direction % 8]
+
+
+def display_weather_info(info):
     ascii = get_ascii(info)
     units = get_units(info)
     time = get_localtime(info)
+    dirs = get_wind_direction(info)
 
     # Print the weather information.
     print(f'\t{ascii[0]}  {BWHITE}{info["name"]}, {info["country"]}{RESET}')
@@ -142,7 +142,7 @@ def display_weather_info(info):
     print(f'\t{ascii[2]}  {info["main"]}. {info["description"]}')
     print(f'\t{ascii[3]}  Pressure: {GREEN}{info["pressure"]}{RESET}hPa'
           f'  Humidity: {GREEN}{info["humidity"]}{RESET}%'
-          f'  Wind: {GREEN}{info["speed"]}{RESET}{units[1]}')
+          f'  Wind: {BWHITE}{dirs} {GREEN}{info["speed"]}{RESET}{units[1]}')
     print(f'\t{ascii[4]}  Time: {GREEN}{time}{RESET}')
 
 
