@@ -1,4 +1,4 @@
-from colours import BYELLOW, BWHITE, BGREY, BBLUE, RESET
+from pwy.colours import BYELLOW, BWHITE, BGREY, BBLUE, RESET
 
 
 clear_sky = [
