@@ -22,11 +22,11 @@ import argparse
 import datetime
 import sys
 
-from key import KEY
-from colours import BWHITE, GREEN, RESET
-from ascii import clear_sky, few_clouds, overcast_cloud, rain, thunderstorm, \
-                    snow, mist, unknown
-from translation import LANGUAGES, TRANSLATIONS
+from pwy.key import KEY
+from pwy.translation import LANGUAGES, TRANSLATIONS
+from pwy.colours import BWHITE, GREEN, RESET
+from pwy.ascii import clear_sky, few_clouds, overcast_cloud, rain, \
+                    thunderstorm, snow, mist, unknown
 
 
 def get_weather_info(city, unit, lang):
@@ -123,6 +123,8 @@ def get_localtime(info):
 
 def get_wind_direction(info):
     # Get the wind direction.
+    # Add wind degree to 11.25 and divide it by 45.
+    # Return the direction modulo to 8.
 
     arrows = ['↓', '↙', '←', '↖', '↑', '↗', '→', '↘']
     direction = int((info['deg'] + 11.25) / 45)
@@ -142,7 +144,7 @@ def display_weather_info(info):
     print(f'\t{ascii[2]}  {info["main"]}. {info["description"]}')
     print(f'\t{ascii[3]}  Pressure: {GREEN}{info["pressure"]}{RESET}hPa'
           f'  Humidity: {GREEN}{info["humidity"]}{RESET}%'
-          f'  Wind: {BWHITE}{dirs} {GREEN}{info["speed"]}{RESET}{units[1]}')
+          f'  Wind: {BWHITE}{dirs}{GREEN}{info["speed"]}{RESET}{units[1]}')
     print(f'\t{ascii[4]}  Time: {GREEN}{time}{RESET}')
 
 
@@ -154,9 +156,9 @@ def main():
     parser = argparse.ArgumentParser(
         description='pwy - A simple weather tool.')
 
-    parser.add_argument('city', nargs='+', help='Input city name')
+    parser.add_argument('city', nargs='+', help='Input city')
     parser.add_argument('--unit', dest='unit', metavar='',
-                        help='Input unit name')
+                        help='Input unit')
     parser.add_argument('--lang', dest='language', metavar='',
                         help='Input language')
 
