@@ -2,7 +2,7 @@ import pathlib
 from setuptools import setup
 
 
-__version__ = '1.2.1'
+__version__ = '1.3.0'
 __author__ = 'Clint'
 
 
@@ -13,7 +13,7 @@ README = (HERE / 'README.md').read_text()
 setup(
     name = 'pwy',
     version = __version__,
-    description = 'A simple weather information tool',
+    description = 'A simple weather tool.',
     long_description = README,
     long_description_content_type = 'text/markdown',
     url = 'https://github.com/clieg/pwy',
