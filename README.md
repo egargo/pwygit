@@ -3,8 +3,9 @@
     <p>A simple weather tool.</p>
     <img src="https://raw.githubusercontent.com/clieg/clieg.github.io/master/images/pwy.png"><br>
     <a href="https://pypi.org/project/pwy"><img src="https://img.shields.io/pypi/v/pwy"></a>
+    <a href="https://pypi.org/project/pwy"><img src="https://img.shields.io/pypi/dm/pwy"></a>
     <a href="https://openweathermap.org/api"><img src="https://img.shields.io/badge/openweathermap-api-blue"></a>
-    <a href="https://github.com/clieg/pwy/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-GPL&#8208;3.0-blue">
+    <a href="https://github.com/clieg/pwy/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-GPL&#8208;3.0-blue"></a>
 </div>
 
 ## Table of Contents
