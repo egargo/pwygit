@@ -21,10 +21,11 @@ import requests
 import argparse
 import datetime
 import sys
+import json
 
 from pwy.key import KEY
-from pwy.translation import LANGUAGES, TRANSLATIONS
-from pwy.colours import BWHITE, GREEN, RESET, BWHITE
+from pwy.translation import TRANSLATIONS_JSON
+from pwy.colours import BWHITE, GREEN, RESET, BWHITE, WHITE
 from pwy.ascii import clear_sky, few_clouds, overcast_cloud, rain, \
                     thunderstorm, snow, mist, unknown
 
@@ -70,10 +71,10 @@ def get_weather_info(city, unit, lang):
 
 def get_ascii(info):
     weather = info["description"]
-    lang = info["lang"]
+    LANGUAGES = json.loads(TRANSLATIONS_JSON)
 
-    if lang in LANGUAGES:
-        language = TRANSLATIONS.get(lang)
+    if info["lang"] in LANGUAGES["LANGUAGES"]:
+        language = LANGUAGES["TRANSLATIONS"][0][info["lang"]]
     else:
         return
 
@@ -84,13 +85,13 @@ def get_ascii(info):
     elif weather in (language[3], language[4]):
         return few_clouds
     elif weather in (language[5], language[6], language[7], language[8]):
-        return rain
+         return rain
     elif weather == language[9]:
-        return thunderstorm
+            return thunderstorm
     elif weather == language[10]:
         return snow
     elif weather == language[11]:
-        return mist
+            return mist
     else:
         return unknown
 
