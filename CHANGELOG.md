@@ -5,6 +5,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
+## 1.3.1 - 2021.06.22
+* Refactored `__main__.py` to process JSON.
+* Refactored `translation.py` for easier access and readability.
+* Added `run_pwy.py` for manual installation.
+* Updated the API key and removed the API key in the `key.py` file. PyPi package can still be used without any problems.
+* Added a space before between the wind direction and wind speed.
+* Removed unused variable.
+
 ## 1.3.0 - 2021.06.19
 * Added wind direction.
 * Wildcard imports removed.
