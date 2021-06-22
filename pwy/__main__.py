@@ -25,7 +25,7 @@ import json
 
 from pwy.key import KEY
 from pwy.translation import TRANSLATIONS_JSON
-from pwy.colours import BWHITE, GREEN, RESET, BWHITE, WHITE
+from pwy.colours import BWHITE, GREEN, RESET, BWHITE
 from pwy.ascii import clear_sky, few_clouds, overcast_cloud, rain, \
                     thunderstorm, snow, mist, unknown
 
