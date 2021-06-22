@@ -18,57 +18,52 @@
 * [License](#license)
 
 ## Dependencies
-* `python` - 3.5 or greater
-* `requests` - for fetching HTTP requests
+* `python 3.6+`
+* `requests`
 
 
 ## Installation
-### Unix-like
+### PyPi
+#### Unix-like
 ```sh
 pip3 install pwy
 ```
-
-### Windows
+#### Windows
 ```sh
 pip install pwy
 ```
 
 
 ## Usage
-### Unix-like
+#### Unix-like
 To display weather in your current city
 ```sh
 pwy tokyo
 ```
-
 You can also specify what country you are in by
 ```sh
 pwy tokyo,jp
 ```
-
 To display weather with specific unit of measurement. By default the unit is Metric system.
 ```sh
 pwy tokyo --unit imperial
 ```
-
 To display weather with specific language.
 ```sh
 pwy tokyo --lang ja
 ```
-
-### Windows
+#### Windows
 ```sh
 pwy tokyo,jp | Write-Host
 ```
 
 
 ## Update
-Unix-like
+#### Unix-like
 ```sh
 pip3 install --upgrade pwy
 ```
-
-Windows
+#### Windows
 ```sh
 pip install --upgrade pwy
 ```
@@ -82,6 +77,7 @@ View [Changelog](https://github.com/clieg/pwy/blob/master/CHANGELOG.md).
 * [pwy Contributors](https://github.com/clieg/pwy/graphs/contributors)
 * [OpenWeatherMap](https://openweathermap.org/current) - API
 * [wego](https://github.com/schachmat/wego) - ASCII art
+
 
 ## License
 This program is provided under the [GPL-3.0 License](https://github.com/clieg/pwy/blob/master/LICENSE).
