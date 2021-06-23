@@ -30,15 +30,19 @@ from pwy.ascii import clear_sky, few_clouds, overcast_cloud, rain, \
                     thunderstorm, snow, mist, unknown
 
 
-def get_weather_info(city, unit, lang):
-    url = (f"https://api.openweathermap.org/data/2.5/weather?q={city}"
+def get_weather_data(location, unit, lang):
+    """ Get weather data from the API and return the necessary data.
+    In the event where the user entered an invalid query, catch the exception
+    and tell the user what's going on and exit the program.
+    """
+    url = (f"https://api.openweathermap.org/data/2.5/weather?q={location}"
            f"&appid={KEY}&units={unit}&lang={lang}")
 
     try:
-        req = requests.get(url)
-        req.raise_for_status()
+        response = requests.get(url)
+        response.raise_for_status()
     except requests.HTTPError:
-        status = req.status_code
+        status = response.status_code
         if status == 401:
             print(f"Invalid API key.")
         elif status == 404:
@@ -48,7 +52,7 @@ def get_weather_info(city, unit, lang):
 
         sys.exit(1)
 
-    data = req.json()
+    data = response.json()
 
     weather_info = {
         "name": data["name"],
@@ -69,14 +73,29 @@ def get_weather_info(city, unit, lang):
     return weather_info
 
 
-def get_ascii(info):
-    weather = info["description"]
+def get_weather_translation(info):
+    """ Translate the current weather's description into the user's language by
+    searching the 'LANGUAGES'. If the language is found, return it. Otherwise,
+    exit the program.
+    """
     LANGUAGES = json.loads(TRANSLATIONS_JSON)
 
     if info["lang"] in LANGUAGES["LANGUAGES"]:
         language = LANGUAGES["TRANSLATIONS"][0][info["lang"]]
     else:
-        return
+        print(f"Invalid input. See pwy -h for more information.")
+        sys.exit(1)
+    
+    return language
+
+
+def get_ascii(info):
+    """ To get the current weather's ASCII art, check if the current weather is
+    equal to the language. If it is, return the weather's designate ASCII art.
+    Otherwise, return 'unknown' ASCII art.
+    """
+    weather = info["description"]
+    language = get_weather_translation(info)
 
     if weather == language[0]:
         return clear_sky
@@ -97,6 +116,8 @@ def get_ascii(info):
 
 
 def get_units(info):
+    """ Return the appropriate unit's indecis.
+    """
     units = ["°C", "m/s", "°F", "mph", "K"]
 
     if info["unit"] == "metric":
@@ -108,17 +129,25 @@ def get_units(info):
 
 
 def get_localtime(info):
+    """ Convert data['timezone'] to seconds and return it in Hour:Minute
+    Timezone format.
+    """
     timezone = datetime.timezone(datetime.timedelta(seconds=info["timezone"]))
     return datetime.datetime.now(tz=timezone).strftime("%H:%M %Z")
 
 
 def get_wind_direction(info):
+    """ Convert data['deg'] to cardinal directions by adding it to 11.25 and
+    dividing it by 45, then return the arrow by modolu of 8.
+    """
     arrows = ["↓", "↙", "←", "↖", "↑", "↗", "→", "↘"]
     direction = int((info["deg"] + 11.25) / 45)
     return arrows[direction % 8]
 
 
 def display_weather_info(info):
+    """ Display the weather information.
+    """
     ascii = get_ascii(info)
     units = get_units(info)
     time = get_localtime(info)
@@ -137,18 +166,21 @@ def display_weather_info(info):
 
 
 def main():
+    """ Get user arguments. If unit and/or lang is empty, assign its value with
+    'metric' and 'en', respectively.
+    """
     parser = argparse.ArgumentParser(
-        description="pwy - A simple weather tool.")
+        description = "pwy - A simple weather tool.")
 
-    parser.add_argument("city", nargs="+", help="Input city")
-    parser.add_argument("--unit", dest="unit", metavar="",
-                        help="Input unit")
-    parser.add_argument("--lang", dest="language", metavar="",
-                        help="Input language")
+    parser.add_argument("location", nargs = "+", help = "Input location")
+    parser.add_argument("--unit", dest = "unit", metavar = "",
+                        help = "Input unit")
+    parser.add_argument("--lang", dest = "language", metavar = "",
+                        help = "Input language")
 
     args = parser.parse_args()
 
-    city = " ".join(args.city)
+    location = " ".join(args.location)
     unit = args.unit
     lang = args.language
  
@@ -157,7 +189,7 @@ def main():
     if lang is None:
         lang = "en"
 
-    info = get_weather_info(city, unit, lang)
+    info = get_weather_data(location, unit, lang)
     display_weather_info(info)
 
 
