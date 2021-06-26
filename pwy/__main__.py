@@ -31,9 +31,8 @@ from pwy.ascii import clear_sky, few_clouds, overcast_cloud, rain, \
 
 
 def get_weather_data(location, unit, lang):
-    """Get weather data from the API and return the necessary data. In the
-    event where the user entered an invalid query, catch the exception and tell
-    the user what's going on and exit the program."""
+    """Get weather data from the API and return the necessary data."""
+
     url = (f"https://api.openweathermap.org/data/2.5/weather?q={location}"
            f"&appid={KEY}&units={unit}&lang={lang}")
 
@@ -73,9 +72,8 @@ def get_weather_data(location, unit, lang):
 
 
 def get_weather_translation(info):
-    """Translate the current weather's description into the user's language by
-    searching LANGUAGES. If the language is found, return it. Otherwise,
-    exit the program."""
+    """Translate the current weather's description into the user's language."""
+
     LANGUAGES = json.loads(TRANSLATIONS_JSON)
 
     if info["lang"] in LANGUAGES["LANGUAGES"]:
@@ -88,8 +86,8 @@ def get_weather_translation(info):
 
 
 def get_ascii(info):
-    """Check if the current weather is equal to the language. If it is, return
-    the weather's designate ASCII art. Otherwise, return unknown ASCII art."""
+    """Get the weather's ASCII art."""
+
     weather = info["description"]
     language = get_weather_translation(info)
 
@@ -113,6 +111,7 @@ def get_ascii(info):
 
 def get_units(info):
     """Return the appropriate unit's indecis."""
+
     units = ["°C", "m/s", "°F", "mph", "K"]
 
     if info["unit"] == "metric":
@@ -124,15 +123,15 @@ def get_units(info):
 
 
 def get_localtime(info):
-    """Convert data['timezone'] to seconds and return it in Hour:Minute
-    Timezone format."""
+    """Convert data['timezone'] to 'Hour:Minute Timezone' format."""
+
     timezone = datetime.timezone(datetime.timedelta(seconds=info["timezone"]))
     return datetime.datetime.now(tz=timezone).strftime("%H:%M %Z")
 
 
 def get_wind_direction(info):
-    """Convert data['deg'] to cardinal directions by adding it to 11.25 and
-    dividing it by 45, then return arrows with modolu of 8.""" 
+    """Convert data['deg'] to cardinal directions."""
+
     arrows = ["↓", "↙", "←", "↖", "↑", "↗", "→", "↘"]
     direction = int((info["deg"] + 11.25) / 45)
     return arrows[direction % 8]
@@ -140,6 +139,7 @@ def get_wind_direction(info):
 
 def display_weather_info(info):
     """Display the weather information."""
+
     ascii = get_ascii(info)
     units = get_units(info)
     time = get_localtime(info)
@@ -158,8 +158,8 @@ def display_weather_info(info):
 
 
 def main():
-    """Get user arguments. If unit and/or lang is empty, assign its value with
-    metric and en, respectively."""
+    """Get user arguments."""
+
     parser = argparse.ArgumentParser(
         description = "pwy - A simple weather tool.")
 
