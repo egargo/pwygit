@@ -1,1 +1,3 @@
-KEY = "OPENWEATHERMAP_API_KEY"
+"""Add your OpenWeatherMap API key."""
+
+KEY = "YOUR_OPENWEATHERMAP_API_KEY"
