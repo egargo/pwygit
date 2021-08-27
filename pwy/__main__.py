@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 #
 # pwy
-# Copyright (C) 2021, Clint <https://github.com/clieg>
+# Copyright (C) 2021, Clint <https://github.com/notclint>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,15 +23,25 @@ import datetime
 import sys
 import json
 
-from pwy.key import KEY
 from pwy.translation import TRANSLATIONS_JSON
 from pwy.colours import BWHITE, GREEN, RESET, BWHITE
 from pwy.ascii import clear_sky, few_clouds, overcast_cloud, rain, \
                     thunderstorm, snow, mist, unknown
 
 
+def get_api_key():
+    """Get OWM API key from the json file."""
+    
+    file = open("key.json")
+    data = json.load(file)
+
+    return data["KEY"]
+
+
 def get_weather_data(location, unit, lang):
     """Get weather data from the API and return the necessary data."""
+
+    KEY = get_api_key()
 
     url = (f"https://api.openweathermap.org/data/2.5/weather?q={location}"
            f"&appid={KEY}&units={unit}&lang={lang}")
