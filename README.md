@@ -39,8 +39,8 @@ pip install pwy
 git clone https://github.com/notclint/pwy
 cd pwy
 
-# Add your OpenWeatherMap API key in the pwy/key.py file.
-vim pwy/key.py
+# Add your OpenWeatherMap API key in the pwy/key.json file.
+vim pwy/key.json
 
 # Install pwy.
 pip3 install .
