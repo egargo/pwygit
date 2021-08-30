@@ -167,7 +167,7 @@ def display_weather_info(info):
     sys.exit()
 
 
-def main():
+if __name__ == "__main__":
     """Get user arguments."""
 
     parser = argparse.ArgumentParser(
@@ -192,7 +192,3 @@ def main():
 
     info = get_weather_data(location, unit, lang)
     display_weather_info(info)
-
-
-if __name__ == "__main__":
-    main()
