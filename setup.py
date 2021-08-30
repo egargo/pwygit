@@ -2,7 +2,7 @@ import pathlib
 from setuptools import setup
 
 
-__version__ = '1.4.0'
+__version__ = '1.4.1'
 __author__ = 'Clint'
 
 
@@ -16,7 +16,7 @@ setup(
     description = 'A simple weather tool.',
     long_description = README,
     long_description_content_type = 'text/markdown',
-    url = 'https://github.com/clieg/pwy',
+    url = 'https://github.com/windybroth/pwy',
     author = __author__,
     license = 'GPLv3',
     classifiers = [
