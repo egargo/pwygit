@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 #
 # pwy
-# Copyright (C) 2021, Clint <https://github.com/notclint>
+# Copyright (C) 2021, Clint <https://github.com/noqqlint>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,25 +23,15 @@ import datetime
 import sys
 import json
 
+from pwy.key import KEY
 from pwy.translation import TRANSLATIONS_JSON
 from pwy.colours import BWHITE, GREEN, RESET, BWHITE
 from pwy.ascii import clear_sky, few_clouds, overcast_cloud, rain, \
                     thunderstorm, snow, mist, unknown
-
-
-def get_api_key():
-    """Get OWM API key from the json file."""
-    
-    file = open("key.json")
-    data = json.load(file)
-
-    return data["KEY"]
-
+from pwy._version import __version__
 
 def get_weather_data(location, unit, lang):
     """Get weather data from the API and return the necessary data."""
-
-    KEY = get_api_key()
 
     url = (f"https://api.openweathermap.org/data/2.5/weather?q={location}"
            f"&appid={KEY}&units={unit}&lang={lang}")
@@ -57,8 +47,6 @@ def get_weather_data(location, unit, lang):
             print(f"Invalid input. See pwy -h for more information.")
         elif status in (429, 443):
             print(f"API calls per minute exceeded.")
-
-        sys.exit(1)
 
     data = response.json()
 
@@ -90,7 +78,6 @@ def get_weather_translation(info):
         language = LANGUAGES["TRANSLATIONS"][0][info["lang"]]
     else:
         print(f"Invalid input. See pwy -h for more information.")
-        sys.exit(1)
     
     return language
 
@@ -164,10 +151,8 @@ def display_weather_info(info):
           f"  {BWHITE}{dirs} {GREEN}{info['speed']}{RESET}{units[1]}")
     print(f"\t{ascii[4]}  {GREEN}{time}{RESET}")
 
-    sys.exit()
 
-
-if __name__ == "__main__":
+def main():
     """Get user arguments."""
 
     parser = argparse.ArgumentParser(
@@ -178,13 +163,15 @@ if __name__ == "__main__":
                         help = "Input unit")
     parser.add_argument("--lang", dest = "language", metavar = "",
                         help = "Input language")
+    parser.add_argument("--version", action = "version",
+                        version=f"pwy {__version__}")
 
     args = parser.parse_args()
 
     location = " ".join(args.location)
     unit = args.unit
     lang = args.language
- 
+
     if unit is None:
         unit = "metric"
     if lang is None:
@@ -192,3 +179,7 @@ if __name__ == "__main__":
 
     info = get_weather_data(location, unit, lang)
     display_weather_info(info)
+
+
+if __name__ == "__main__":
+    sys.exit(main())
