@@ -1,33 +1,30 @@
 import pathlib
 from setuptools import setup
 
-
-__version__ = '1.4.1'
-__author__ = 'Clint'
+from pwy._version import __version__
 
 
-HERE = pathlib.Path(__file__).parent
-README = (HERE / 'README.md').read_text()
-
+README = open("README.md").read()
 
 setup(
-    name = 'pwy',
+    name = "pwy",
     version = __version__,
-    description = 'A simple weather tool.',
+    description = "A simple weather tool.",
     long_description = README,
-    long_description_content_type = 'text/markdown',
-    url = 'https://github.com/windybroth/pwy',
-    author = __author__,
-    license = 'GPLv3',
+    long_description_content_type = "text/markdown",
+    url = "https://github.com/noqqlint/pwy",
+    author = "Clint",
+    license = "GPLv3",
     classifiers = [
-        'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
-        'Programming Language :: Python :: 3.6',
-        'Programming Language :: Python :: 3.7',
-        'Programming Language :: Python :: 3.8',
-        'Programming Language :: Python :: 3.9',
+        "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
     ],
-    packages = ['pwy'],
+    packages = ["pwy"],
     include_package_data = True,
+    package_data = {"pwy": ["pwy/*"]},
     install_requires = ['requests'],
-    entry_points = {'console_scripts': ['pwy=pwy.__main__:main']},
+    entry_points = {"console_scripts": ["pwy = pwy.__main__:main"]},
 )
