@@ -5,15 +5,34 @@ import sys
 import os
 import json
 
-from pwy.key import KEY
 from pwy.translation import TRANSLATIONS_JSON
 from pwy.colours import BWHITE, GREEN, RESET, BWHITE
 from pwy.ascii import clear_sky, few_clouds, overcast_cloud, rain, \
                     thunderstorm, snow, mist, unknown
 from pwy._version import __version__
 
+
+def get_key():
+    """Read the user's OWM API key from the .pwyrc file"""
+
+    home = os.path.expanduser("~")
+
+    if os.name is "posix":
+        with open(f"{home}/.pwyrc") as f:
+            key = f.readline()
+
+        return key
+    else:
+        with open(f"{home}\.pwyrc") as f:
+            key = f.readline()
+
+        return key
+
+
 def get_weather_data(location, unit, lang):
     """Get weather data from the API and return the necessary data."""
+
+    KEY = get_key()
 
     url = (f"https://api.openweathermap.org/data/2.5/weather?q={location}"
            f"&appid={KEY}&units={unit}&lang={lang}")
@@ -135,12 +154,17 @@ def display_weather_info(info):
 
 
 def configuration(config):
-    """Configure OWM API key."""
+    """Configure OWM API key and save it in the .pwyrc file."""
 
-    path = os.getenv("HOME")
-    key_file = open(f"{path}/.local/lib/python3.8/site-packages/pwy/key.py", "w")
-    key_file.write(f"KEY = \"{config}\"")
-    key_file.close();
+    home = os.path.expanduser("~")
+
+    if os.name is "posix":
+        key_file = open(f"{home}/.pwyrc", "w+")
+    else:
+        key_file = open(f"{home}\.pwyrc", "w+")
+
+    key_file.write(config)
+    key_file.close()
 
     return "Configuration finished."
 
@@ -151,14 +175,14 @@ def main():
     parser = argparse.ArgumentParser(
         description = "pwy - A simple weather tool.")
 
-    parser.add_argument("location", nargs = "*", help = "Input location")
-    parser.add_argument("--config", dest = "config", metavar = "",
-                        help = "Configure pwy");
-    parser.add_argument("--unit", dest = "unit", metavar = "",
-                        help = "Input unit")
-    parser.add_argument("--lang", dest = "language", metavar = "",
-                        help = "Input language")
-    parser.add_argument("--version", action = "version",
+    parser.add_argument("location", nargs = "*", help = "input location")
+    parser.add_argument("-c", "--config", dest = "config", metavar = "",
+                        help = "configure pwy");
+    parser.add_argument("-u", "--unit", dest = "unit", metavar = "",
+                        help = "input unit")
+    parser.add_argument("-l", "--lang", dest = "language", metavar = "",
+                        help = "input language")
+    parser.add_argument("-v", "--version", action = "version",
                         version=f"pwy {__version__}")
 
     args = parser.parse_args()
