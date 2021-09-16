@@ -1,7 +1,6 @@
 import requests
 import argparse
 import datetime
-import sys
 import os
 import json
 
@@ -32,10 +31,8 @@ def get_key():
 def get_weather_data(location, unit, lang):
     """Get weather data from the API and return the necessary data."""
 
-    KEY = get_key()
-
     url = (f"https://api.openweathermap.org/data/2.5/weather?q={location}"
-           f"&appid={KEY}&units={unit}&lang={lang}")
+           f"&appid={get_key()}&units={unit}&lang={lang}")
 
     try:
         response = requests.get(url)
@@ -143,14 +140,16 @@ def display_weather_info(info):
     time = get_localtime(info)
     dirs = get_wind_direction(info)
 
-    print(f"\t{ascii[0]}  {BWHITE}{info['name']}, {info['country']}{RESET}")
-    print(f"\t{ascii[1]}  {GREEN}{info['temp']}{RESET}"
-          f" ({info['feels_like']}) {units[0]}")
-    print(f"\t{ascii[2]}  {info['main']}. {info['description']}")
-    print(f"\t{ascii[3]}  {GREEN}{info['pressure']}{RESET}hPa"
-          f"  {GREEN}{info['humidity']}{RESET}%"
-          f"  {BWHITE}{dirs} {GREEN}{info['speed']}{RESET}{units[1]}")
-    print(f"\t{ascii[4]}  {GREEN}{time}{RESET}")
+    return(
+        f"\t{ascii[0]}  {BWHITE}{info['name']}, {info['country']}{RESET}\n"
+        f"\t{ascii[1]}  {GREEN}{info['temp']}{RESET} "\
+            f"({info['feels_like']}) {units[0]}\n"
+        f"\t{ascii[2]}  {info['main']}. {info['description']}\n"
+        f"\t{ascii[3]}  {GREEN}{info['pressure']}{RESET}hPa  "\
+            f"{GREEN}{info['humidity']}{RESET}%  {BWHITE}{dirs} "\
+            f"{GREEN}{info['speed']}{RESET}{units[1]}\n"
+        f"\t{ascii[4]}  {GREEN}{time}{RESET}\n"
+    )
 
 
 def configuration(config):
@@ -177,7 +176,7 @@ def main():
 
     parser.add_argument("location", nargs = "*", help = "input location")
     parser.add_argument("-c", "--config", dest = "config", metavar = "",
-                        help = "configure pwy");
+                        help = "configure pwy")
     parser.add_argument("-u", "--unit", dest = "unit", metavar = "",
                         help = "input unit")
     parser.add_argument("-l", "--lang", dest = "language", metavar = "",
@@ -201,4 +200,4 @@ def main():
             lang = "en"
 
         info = get_weather_data(location, unit, lang)
-        display_weather_info(info)
+        print(display_weather_info(info))
