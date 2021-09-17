@@ -1,6 +1,4 @@
-import pathlib
 from setuptools import setup
-
 from pwy._version import __version__
 
 
