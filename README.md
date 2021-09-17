@@ -52,7 +52,7 @@ pip3 install .
 Before you can use pwy, you need to configure your OWM API key first. After you're through, the `.pwyrc` config file, containing your OWM API key will be generated in your home directory. Get your OWM key by [signing up](https://home.openweathermap.org/users/sign_up).
 ```sh
 # Configure pwy with your OWM API key.
-pwy --configure XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+pwy --config XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 ```
 
 
