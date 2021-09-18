@@ -177,10 +177,10 @@ def main():
     parser.add_argument("location", nargs = "*", help = "input location")
     parser.add_argument("-c", "--config", dest = "config", metavar = "",
                         help = "configure pwy")
-    parser.add_argument("-u", "--unit", dest = "unit", metavar = "",
-                        help = "input unit")
-    parser.add_argument("-l", "--lang", dest = "language", metavar = "",
-                        help = "input language")
+    parser.add_argument("-u", "--unit", dest = "unit", default="metric",
+                        metavar = "", help = "input unit")
+    parser.add_argument("-l", "--lang", dest = "language", default="en",
+                        metavar = "", help = "input language")
     parser.add_argument("-v", "--version", action = "version",
                         version=f"pwy {__version__}")
 
@@ -194,10 +194,5 @@ def main():
     if config is not None:
         print(configuration(config))
     else:
-        if unit is None:
-            unit = "metric"
-        if lang is None:
-            lang = "en"
-
         info = get_weather_data(location, unit, lang)
         print(display_weather_info(info))
