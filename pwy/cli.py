@@ -40,11 +40,11 @@ def get_weather_data(location, unit, lang):
     except requests.HTTPError:
         status = response.status_code
         if status == 401:
-            print(f"Invalid API key.")
+            print("Invalid API key.")
         elif status == 404:
-            print(f"Invalid input. See pwy -h for more information.")
+            print("Invalid input. See pwy -h for more information.")
         elif status in (429, 443):
-            print(f"API calls per minute exceeded.")
+            print("API calls per minute exceeded.")
 
     data = response.json()
 
