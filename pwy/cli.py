@@ -3,6 +3,7 @@ import argparse
 import datetime
 import os
 import json
+import sys
 
 from pwy.translation import TRANSLATIONS_JSON
 from pwy.colours import BWHITE, GREEN, RESET, BWHITE
@@ -45,6 +46,8 @@ def get_weather_data(location, unit, lang):
             print("Invalid input. See pwy -h for more information.")
         elif status in (429, 443):
             print("API calls per minute exceeded.")
+
+        sys.exit(1)
 
     data = response.json()
 
