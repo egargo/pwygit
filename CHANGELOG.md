@@ -5,6 +5,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
+## [Unreleased]
+
+
+## 1.4.3 - 2021.09.26
+* Added default value to the arguments and removed the unnecessary if else.
+* Removed the unnecessary f-strings
+* Added `sys.exit(1)`.
+* Moved `.pwyrc` to `~/.config/pwyrc` (in Unix-like OS).
+* Minor code refactor.
+
+
 ## 1.4.2 - 2021.09.17
 * Moved `__main__.py` to `cli.py`.
 * Added `_version.py`.
