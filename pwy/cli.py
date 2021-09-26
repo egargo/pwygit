@@ -18,7 +18,7 @@ def get_key():
     home = os.path.expanduser("~")
 
     if os.name is "posix":
-        with open(f"{home}/.pwyrc") as f:
+        with open(f"{home}/.config/pwyrc") as f:
             key = f.readline()
 
         return key
@@ -161,7 +161,7 @@ def configuration(config):
     home = os.path.expanduser("~")
 
     if os.name is "posix":
-        key_file = open(f"{home}/.pwyrc", "w+")
+        key_file = open(f"{home}/.config/pwyrc", "w+")
     else:
         key_file = open(f"{home}\.pwyrc", "w+")
 
