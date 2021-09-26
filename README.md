@@ -5,7 +5,7 @@
     <a href="https://pypi.org/project/pwy"><img src="https://img.shields.io/pypi/v/pwy"></a>
     <a href="https://openweathermap.org/api"><img src="https://img.shields.io/badge/openweathermap-api-blue"></a>
     <a href="#"><img src="https://static.pepy.tech/personalized-badge/pwy?period=total&units=none&left_color=grey&right_color=blue&left_text=downloads"></a>
-    <a href="https://github.com/noqqlint/pwy/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-GPL&#8208;3.0-blue"></a>
+    <a href="https://github.com/noqqlint/pwy/blob/master/LICENSE"><img src="https://img.shields.io/pypi/l/pwy?color=blue"></a>
 </div>
 
 
@@ -35,10 +35,9 @@ pip3 install pwy
 
 ### Manual/Git install
 #### Unix-like | Windows (Cygwin/WSL)
-```sh
-# If you have Git installed, git clone the repository.
-git clone https://github.com/noqqlint/pwy
 
+Download the latest pwy package [here](https://github.com/noqqlint/pwy/releases) and uncompress it.
+```sh
 # Go to pwy directory.
 cd pwy
 
@@ -49,7 +48,8 @@ pip3 install .
 
 ## Configuration
 ### Unix-like | Windows (Cygwin/WSL)
-Before you can use pwy, you need to configure your OWM API key first. After you're through, the `.pwyrc` config file, containing your OWM API key will be generated in your home directory. Get your OWM key by [signing up](https://home.openweathermap.org/users/sign_up).
+Before you can use pwy, you need to configure your OWM API key first. After you're through, the `pwyrc` (`~/.config/pwyrc` for Unix-like and `.pwyrc` for Windows) config file, containing your OWM API key will be generated. Get your OWM key by [signing up](https://home.openweathermap.org/users/sign_up).
+
 *Note: After creating your OWM API key you have to wait a couple of minutes for your API key to activate.*
 ```sh
 # Configure pwy with your OWM API key.
