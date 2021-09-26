@@ -20,6 +20,16 @@
 * [License](#license)
 
 
+## Features
+* ASCII art
+* Display weather information
+    * The name of the location.
+    * Temperature (and what the temperature feels like).
+    * Weather and weahter description.
+    * Wind pressure, humidity, wind direction, and Wind speed.
+    * Time and timezone of the location.
+
+
 ## Dependencies
 * OpenWeatherMap API key
 * Python 3.8
@@ -50,7 +60,8 @@ pip3 install .
 ### Unix-like | Windows (Cygwin/WSL)
 Before you can use pwy, you need to configure your OWM API key first. After you're through, the `pwyrc` (`~/.config/pwyrc` for Unix-like and `.pwyrc` for Windows) config file, containing your OWM API key will be generated. Get your OWM key by [signing up](https://home.openweathermap.org/users/sign_up).
 
-*Note: After creating your OWM API key you have to wait a couple of minutes for your API key to activate.*
+* After creating your OWM API key you have to wait a couple of minutes for your API key to activate.
+* This only applies to Unix-like users: If you just install pwy version 1.4.3, please delete the `.pwyrc` in your home director.
 ```sh
 # Configure pwy with your OWM API key.
 pwy --config XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
