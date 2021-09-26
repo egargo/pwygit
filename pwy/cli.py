@@ -1,9 +1,9 @@
-import requests
-import argparse
-import datetime
 import os
-import json
 import sys
+import argparse
+import json
+import requests
+import datetime
 
 from pwy.translation import TRANSLATIONS_JSON
 from pwy.colours import BWHITE, GREEN, RESET, BWHITE
