@@ -7,8 +7,8 @@ import datetime
 from rich import print
 
 from pwy.translation import TRANSLATIONS_JSON
-from pwy.ascii import clear_sky, few_clouds, overcast_cloud, rain, \
-                    thunderstorm, snow, mist, unknown
+from pwy.ascii import(clear_sky, few_clouds, overcast_cloud, rain,
+                    thunderstorm, snow, mist, unknown)
 from pwy._version import __version__
 
 
@@ -123,8 +123,8 @@ def get_units(info):
 def get_localtime(info):
     """Convert data['timezone'] to 'Hour:Minute Timezone' format."""
 
-    timezone = datetime.timezone(datetime.timedelta(seconds=info["timezone"]))
-    return datetime.datetime.now(tz=timezone).strftime("%H:%M %Z")
+    timezone = datetime.timezone(datetime.timedelta(seconds = info["timezone"]))
+    return datetime.datetime.now(tz = timezone).strftime("%H:%M %Z")
 
 
 def get_wind_direction(info):
