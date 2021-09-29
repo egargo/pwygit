@@ -1,75 +1,74 @@
-from pwy.colours import BYELLOW, BWHITE, BGREY, BBLUE, RESET
-
+from rich import color
 
 clear_sky = [
-    "{}    \\   /    {}".format(BYELLOW, RESET),
-    "{}     .-.     {}".format(BYELLOW, RESET),
-    "{}  ‒ (   ) ‒  {}".format(BYELLOW, RESET),
-    "{}     `-᾿     {}".format(BYELLOW, RESET),
-    "{}    /   \\    {}".format(BYELLOW, RESET)
+    "[b yellow]    \\   /    [/]",
+    "[b yellow]     .-.     [/]",
+    "[b yellow]  ‒ (   ) ‒  [/]",
+    "[b yellow]     `-᾿     [/]",
+    "[b yellow]    /   \\    [/]"
 ]
 
 
 few_clouds = [
-    "{}   \\  /       {}".format(BYELLOW, RESET),
-    "{} _ /\"\"{}.-.     {}".format(BYELLOW, BWHITE, RESET),
-    "{}   \\{}_(   ).-. {}".format(BYELLOW, BWHITE, RESET),
-    "{}   /{}(________){}".format(BYELLOW, BWHITE, RESET),
-    "{}              {}".format(BGREY, RESET)
+    "[b yellow]   \\  /       [/]",
+    "[b yellow] _ /\"\"[/][b white].-.     [/]",
+    "[b yellow]   \\ [/][b white]_(  ).-. [/]",
+    "[b yellow]   /[/][b white](________)[/]",
+    "              "
 ]
 
 
 overcast_cloud = [
-    "{}          {}".format(BGREY, RESET),
-    "{}  .-.     {}".format(BGREY, RESET),
-    "{} (   ).-. {}".format(BGREY, RESET),
-    "{}(________){}".format(BGREY, RESET),
-    "{}          {}".format(BGREY, RESET)
+    "[b grey]          [/]",
+    "[b grey]  .-.     [/]",
+    "[b grey] (   ).-. [/]",
+    "[b grey](________)[/]",
+    "[b grey]          [/]"
 ]
 
 
 rain = [
-    "{}    .-.     {}".format(BGREY, RESET),
-    "{}   (   ).-. {}".format(BGREY, RESET),
-    "{}  (________){}".format(BGREY, RESET),
-    "{}  ‚ʻ‚ʻ‚ʻ‚ʻ  {}".format(BBLUE, RESET),
-    "{}  ‚ʻ‚ʻ‚ʻ‚ʻ  {}".format(BBLUE, RESET),
+    "[b grey]    .-.     [/]",
+    "[b grey]   (   ).-. [/]",
+    "[b grey]  (________)[/]",
+    "[b blue]  ‚ʻ‚ʻ‚ʻ‚ʻ  [/]",
+    "[b blue]  ‚ʻ‚ʻ‚ʻ‚ʻ  [/]",
     "            "
 ]
 
 
 thunderstorm = [
-    "{}  .-.     {}".format(BGREY, RESET),
-    "{} (   ).-. {}".format(BGREY, RESET),
-    "{}(________){}".format(BGREY, RESET),
-    "{}‚ʻ{}⚡{}ʻ‚{}⚡{}‚ʻ{}".format(BBLUE, BYELLOW, BBLUE, BYELLOW, BBLUE, RESET),
-    "{}‚ʻ‚ʻ{}⚡{}ʻ‚ʻ {}".format(BBLUE, BYELLOW, BBLUE, RESET),
+    "[b grey]  .-.     [/]",
+    "[b grey] (   ).-. [/]",
+    "[b grey](________)[/]",
+    "[b blue]‚ʻ[/][b yellow]⚡[/][b blue]ʻ‚[/][b yellow]⚡[/][b blue]‚ʻ[/]",
+    "[b blue]‚ʻ‚ʻ[/][b yellow]⚡[/][b blue]ʻ‚ʻ [/]",
     "         "
 ]
 
 
 snow = [
-    "{}  .-.     {}".format(BGREY, RESET),
-    "{} (   ).-. {}".format(BGREY, RESET),
-    "{}(________){}".format(BGREY, RESET),
-    "{}  * * * * {}".format(BWHITE, RESET),
-    "{} * * * *  {}".format(BWHITE, RESET)
+    "[b grey]  .-.     [/]",
+    "[b grey] (   ).-. [/]",
+    "[b grey](________)[/]",
+    "[b white]  * * * * [/]",
+    "[b white] * * * *  [/]"
 ]
 
 
 mist = [
-    "{}             {}".format(BGREY, RESET),
-    "{} _ - _ - _ - {}".format(BGREY, RESET),
-    "{}  _ - _ - _  {}".format(BGREY, RESET),
-    "{} _ - _ - _ - {}".format(BGREY, RESET),
-    "{}             {}".format(BGREY, RESET)
+    "[b grey]             [/]",
+    "[b grey] _ - _ - _ - [/]",
+    "[b grey]  _ - _ - _  [/]",
+    "[b grey] _ - _ - _ - [/]",
+    "             "
 ]
 
 
 unknown = [
-    "{}    .-.      {}".format(BWHITE, RESET),
-    "{}     __)     {}".format(BWHITE, RESET),
-    "{}    (        {}".format(BWHITE, RESET),
-    "{}     `-᾿     {}".format(BWHITE, RESET),
-    "{}      •      {}".format(BWHITE, RESET)
+    "[b white]    .-.      [/]",
+    "[b white]     __)     [/]",
+    "[b white]    (        [/]",
+    "[b white]     `-᾿     [/]",
+    "[b white]      •      [/]"
 ]
