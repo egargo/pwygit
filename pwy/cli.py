@@ -4,9 +4,9 @@ import argparse
 import json
 import requests
 import datetime
+from rich import print
 
 from pwy.translation import TRANSLATIONS_JSON
-from pwy.colours import BWHITE, GREEN, RESET, BWHITE
 from pwy.ascii import clear_sky, few_clouds, overcast_cloud, rain, \
                     thunderstorm, snow, mist, unknown
 from pwy._version import __version__
@@ -41,11 +41,11 @@ def get_weather_data(location, unit, lang):
     except requests.HTTPError:
         status = response.status_code
         if status == 401:
-            print("Invalid API key.")
+            print("[orange1]Invalid API key.[/]")
         elif status == 404:
-            print("Invalid input. See pwy -h for more information.")
+            print("[orange1]Invalid input. See pwy -h for more information.[/]")
         elif status in (429, 443):
-            print("API calls per minute exceeded.")
+            print("[orange1]API calls per minute exceeded.[/]")
 
         sys.exit(1)
 
@@ -78,7 +78,7 @@ def get_weather_translation(info):
     if info["lang"] in LANGUAGES["LANGUAGES"]:
         language = LANGUAGES["TRANSLATIONS"][0][info["lang"]]
     else:
-        print(f"Invalid input. See pwy -h for more information.")
+        print("[orange1]Invalid input. See pwy -h for more information.[/]")
     
     return language
 
@@ -144,14 +144,14 @@ def display_weather_info(info):
     dirs = get_wind_direction(info)
 
     return(
-        f"\t{ascii[0]}  {BWHITE}{info['name']}, {info['country']}{RESET}\n"
-        f"\t{ascii[1]}  {GREEN}{info['temp']}{RESET} "\
+        f"\t{ascii[0]}  [b white]{info['name']}, {info['country']}[/]\n"
+        f"\t{ascii[1]}  [green]{info['temp']}[/] "\
             f"({info['feels_like']}) {units[0]}\n"
-        f"\t{ascii[2]}  {info['main']}. {info['description']}\n"
-        f"\t{ascii[3]}  {GREEN}{info['pressure']}{RESET}hPa  "\
-            f"{GREEN}{info['humidity']}{RESET}%  {BWHITE}{dirs} "\
-            f"{GREEN}{info['speed']}{RESET}{units[1]}\n"
-        f"\t{ascii[4]}  {GREEN}{time}{RESET}\n"
+        f"\t{ascii[2]}  [b white]{info['main']}[/]. {info['description']}\n"
+        f"\t{ascii[3]}  [b green]{info['pressure']}[/]hPa  "\
+            f"[b green]{info['humidity']}[/]%  [b white]{dirs}[/] "\
+            f"[b green]{info['speed']}[/]{units[1]}\n"
+        f"\t{ascii[4]}  {time}\n"
     )
 
 
@@ -168,7 +168,7 @@ def configuration(config):
     key_file.write(config)
     key_file.close()
 
-    return "Configuration finished."
+    return "[green]Configuration finished.[/]"
 
 
 def main():
