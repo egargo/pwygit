@@ -7,8 +7,16 @@ import datetime
 from rich import print
 
 from pwy.translation import TRANSLATIONS_JSON
-from pwy.ascii import(clear_sky, few_clouds, overcast_cloud, rain,
-                    thunderstorm, snow, mist, unknown)
+from pwy.ascii import (
+    clear_sky,
+    few_clouds,
+    overcast_cloud,
+    rain,
+    thunderstorm,
+    snow,
+    mist,
+    unknown,
+)
 from pwy._version import __version__
 
 
@@ -32,8 +40,10 @@ def get_key():
 def get_weather_data(location, unit, lang):
     """Get weather data from the API and return the necessary data."""
 
-    url = (f"https://api.openweathermap.org/data/2.5/weather?q={location}"
-           f"&appid={get_key()}&units={unit}&lang={lang}")
+    url = (
+        f"https://api.openweathermap.org/data/2.5/weather?q={location}"
+        f"&appid={get_key()}&units={unit}&lang={lang}"
+    )
 
     try:
         response = requests.get(url)
@@ -64,7 +74,7 @@ def get_weather_data(location, unit, lang):
         "deg": data["wind"]["deg"],
         "timezone": data["timezone"],
         "unit": unit,
-        "lang": lang
+        "lang": lang,
     }
 
     return weather_info
@@ -79,7 +89,7 @@ def get_weather_translation(info):
         language = LANGUAGES["TRANSLATIONS"][0][info["lang"]]
     else:
         print("[orange1]Invalid input. See pwy -h for more information.[/]")
-    
+
     return language
 
 
@@ -96,13 +106,13 @@ def get_ascii(info):
     elif weather in (language[3], language[4]):
         return few_clouds
     elif weather in (language[5], language[6], language[7], language[8]):
-         return rain
+        return rain
     elif weather == language[9]:
-            return thunderstorm
+        return thunderstorm
     elif weather == language[10]:
         return snow
     elif weather == language[11]:
-            return mist
+        return mist
     else:
         return unknown
 
@@ -123,14 +133,25 @@ def get_units(info):
 def get_localtime(info):
     """Convert data['timezone'] to 'Hour:Minute Timezone' format."""
 
-    timezone = datetime.timezone(datetime.timedelta(seconds = info["timezone"]))
-    return datetime.datetime.now(tz = timezone).strftime("%H:%M %Z")
+    timezone = datetime.timezone(datetime.timedelta(seconds=info["timezone"]))
+
+    return datetime.datetime.now(tz=timezone).strftime("%H:%M %Z")
 
 
 def get_wind_direction(info):
     """Convert data['deg'] to cardinal directions."""
 
-    arrows = ["↓", "↙", "←", "↖", "↑", "↗", "→", "↘"]
+    # arrows = ["↓", "↙", "←", "↖", "↑", "↗", "→", "↘"]
+    arrows = [
+        ":down_arrow:",
+        ":down-left_arrow:",
+        ":left_arrow:",
+        ":up-left_arrow:",
+        ":up_arrow:",
+        ":up-right_arrow:",
+        ":right_arrow:",
+        ":down-right_arrow:",
+    ]
     direction = int((info["deg"] + 11.25) / 45)
     return arrows[direction % 8]
 
@@ -143,14 +164,14 @@ def display_weather_info(info):
     time = get_localtime(info)
     dirs = get_wind_direction(info)
 
-    return(
+    return (
         f"\t{ascii[0]}  [b white]{info['name']}, {info['country']}[/]\n"
-        f"\t{ascii[1]}  [green]{info['temp']}[/] "\
-            f"({info['feels_like']}) {units[0]}\n"
+        f"\t{ascii[1]}  [green]{info['temp']}[/] "
+        f"({info['feels_like']}) {units[0]}\n"
         f"\t{ascii[2]}  [b white]{info['main']}[/]. {info['description']}\n"
-        f"\t{ascii[3]}  [b green]{info['pressure']}[/]hPa  "\
-            f"[b green]{info['humidity']}[/]%  [b white]{dirs}[/] "\
-            f"[b green]{info['speed']}[/]{units[1]}\n"
+        f"\t{ascii[3]}  [b green]{info['pressure']}[/]hPa  "
+        f"[b green]{info['humidity']}[/]%  [b white]{dirs}[/] "
+        f"[b green]{info['speed']}[/]{units[1]}\n"
         f"\t{ascii[4]}  {time}\n"
     )
 
@@ -160,7 +181,7 @@ def configuration(config):
 
     home = os.path.expanduser("~")
 
-    if os.name is "posix":
+    if os.name == "posix":
         key_file = open(f"{home}/.config/pwyrc", "w+")
     else:
         key_file = open(f"{home}\.pwyrc", "w+")
@@ -174,18 +195,21 @@ def configuration(config):
 def main():
     """Get user arguments."""
 
-    parser = argparse.ArgumentParser(
-        description = "pwy - A simple weather tool.")
+    parser = argparse.ArgumentParser(description="pwy - A simple weather tool")
 
-    parser.add_argument("location", nargs = "*", help = "input location")
-    parser.add_argument("-c", "--config", dest = "config", metavar = "",
-                        help = "configure pwy")
-    parser.add_argument("-u", "--unit", dest = "unit", default="metric",
-                        metavar = "", help = "input unit")
-    parser.add_argument("-l", "--lang", dest = "language", default="en",
-                        metavar = "", help = "input language")
-    parser.add_argument("-v", "--version", action = "version",
-                        version=f"pwy {__version__}")
+    parser.add_argument("location", nargs="*", help="input location")
+    parser.add_argument(
+        "-c", "--config", dest="config", metavar="", help="configure pwy"
+    )
+    parser.add_argument(
+        "-u", "--unit", dest="unit", default="metric", metavar="", help="input unit"
+    )
+    parser.add_argument(
+        "-l", "--lang", dest="language", default="en", metavar="", help="input language"
+    )
+    parser.add_argument(
+        "-v", "--version", action="version", version=f"pwy {__version__}"
+    )
 
     args = parser.parse_args()
 
