@@ -16,6 +16,7 @@
 * [Usage](#usage)
 * [Update](#update)
 * [Changelog](#changelog)
+* [Contributing](#contributing)
 * [Credits](#credits)
 * [License](#license)
 
@@ -26,7 +27,7 @@
     * The name of the location.
     * Temperature (and what the temperature feels like).
     * Weather and weahter description.
-    * Wind pressure, humidity, wind direction, and Wind speed.
+    * Wind pressure, humidity, wind direction, and wind speed.
     * Time and timezone of the location.
 
 
@@ -38,60 +39,67 @@
 
 ## Installation
 ### Pip install
-#### Unix-like | Windows (Cygwin/WSL)
+#### Unix-like | Windows
 ```sh
-pip3 install pwy
+pip install pwy
 ```
 
 ### Manual/Git install
-#### Unix-like | Windows (Cygwin/WSL)
+#### Unix-like | Windows
 
 Download the latest pwy package [here](https://github.com/noqqlint/pwy/releases) and uncompress it.
+Go to pwy directory.
 ```sh
-# Go to pwy directory.
 cd pwy
-
-# Install pwy.
-pip3 install .
+```
+Install pwy.
+```
+pip install .
 ```
 
 
 ## Configuration
-### Unix-like | Windows (Cygwin/WSL)
+### Unix-like | Windows
 Before you can use pwy, you need to configure your OWM API key first. After you're through, the `pwyrc` (`~/.config/pwyrc` for Unix-like and `.pwyrc` for Windows) config file, containing your OWM API key will be generated. Get your OWM key by [signing up](https://home.openweathermap.org/users/sign_up).
 
 * After creating your OWM API key you have to wait a couple of minutes for your API key to activate.
 * This only applies to Unix-like users: If you just install pwy version 1.4.3, please delete the `.pwyrc` in your home director.
+Configure pwy with your OWM API key.
 ```sh
-# Configure pwy with your OWM API key.
 pwy --config XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 ```
 
 
 ## Usage
-### Unix-like | Windows (Cygwin/WSL)
+### Unix-like | Windows
+To display weather in your current city.
 ```sh
-# To display weather in your current city.
 pwy tokyo
+```
 
-# You can also specify what country you are in by.
+You can also specify what country you are in by.
+```sh
 pwy tokyo,jp
+```
 
-# To display weather with specific unit of measurement. By default the unit is Metric system.
+To display weather with specific unit of measurement. By default the unit is Metric system.
+```sh
 pwy tokyo --unit imperial
-
-# To display weather with specific language.
+```
+To display weather with specific language.
+```sh
 pwy tokyo --lang ja
-
-# To display help information.
+```
+To display help information.
+```sh
 pwy --help
 ```
 
 
 ## Update
-### Unix-like | Windows (Cygwin/WSL)
+### Unix-like | Windows
 ```sh
-pip3 install --upgrade pwy
+pip install --upgrade pwy
 ```
 
 
