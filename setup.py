@@ -15,7 +15,8 @@ setup(
     license="GPLv3",
     classifiers=[
         "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
-        "Operating System :: POSIX :: Linux" "Operating System :: MacOS",
+        "Operating System :: POSIX :: Linux",
+        "Operating System :: MacOS",
         "Operating System :: Microsoft :: Windows",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
