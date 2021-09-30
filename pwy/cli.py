@@ -141,7 +141,6 @@ def get_localtime(info):
 def get_wind_direction(info):
     """Convert data['deg'] to cardinal directions."""
 
-    # arrows = ["↓", "↙", "←", "↖", "↑", "↗", "→", "↘"]
     arrows = [
         ":down_arrow:",
         ":down-left_arrow:",
@@ -153,6 +152,7 @@ def get_wind_direction(info):
         ":down-right_arrow:",
     ]
     direction = int((info["deg"] + 11.25) / 45)
+
     return arrows[direction % 8]
 
 
