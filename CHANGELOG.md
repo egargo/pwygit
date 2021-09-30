@@ -5,7 +5,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
-## [Unreleased]
+## 1.4.4 - 2021.09.30
+* Implemented rich.
+* Replaced colours.py with rich library.
+* Removed colours.py.
+* Formatted using black module.
+* Minor code cleanup
 
 
 ## 1.4.3 - 2021.09.26
@@ -25,9 +30,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * API key is now stored in `.pwyrc`.
 
 
-## 1.4.1 - 2021.08.27 (Yanked)
-* Changed `key.py` to `key.json`.
-* Removed the `main` function and its contents to `if __name__ == "__main__`.
+## ~~1.4.1 - 2021.08.27 (Yanked)~~
+* ~~Changed `key.py` to `key.json`~~
+* ~~Removed the `main` function and its contents to `if __name__ == "__main__`.~~
 
 
 ## 1.4.0 - 2021.06.26
