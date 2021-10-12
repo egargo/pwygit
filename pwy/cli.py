@@ -25,7 +25,7 @@ def get_key():
 
     home = os.path.expanduser("~")
 
-    if os.name is "posix":
+    if os.name == "posix":
         with open(f"{home}/.config/pwyrc") as f:
             key = f.readline()
 
