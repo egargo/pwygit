@@ -16,7 +16,6 @@
 * [Usage](#usage)
 * [Update](#update)
 * [Changelog](#changelog)
-* [Contributing](#contributing)
 * [Credits](#credits)
 * [License](#license)
 
@@ -35,26 +34,27 @@
 * OpenWeatherMap API key
 * Python 3.8
     * requests
+	* rich
 
 
 ## Installation
 ### Pip install
 #### Unix-like | Windows
 ```sh
-pip install pwy
+pip3 install pwy
 ```
 
 ### Manual/Git install
 #### Unix-like | Windows
 
-Download the latest pwy package [here](https://github.com/noqqlint/pwy/releases) and uncompress it.
+Download the latest pwy package [here](https://github.com/noqqlint/pwy/releases/latest) and uncompress it.
 Go to pwy directory.
 ```sh
 cd pwy
 ```
 Install pwy.
 ```
-pip install .
+pip3 install .
 ```
 
 
@@ -99,7 +99,7 @@ pwy --help
 ## Update
 ### Unix-like | Windows
 ```sh
-pip install --upgrade pwy
+pip3 install --upgrade pwy
 ```
 
 
