@@ -20,21 +20,25 @@ from pwy.ascii import (
 from pwy._version import __version__
 
 
-def get_key():
+def get_config_data():
     """Read the user's OWM API key from the .pwyrc file"""
 
     home = os.path.expanduser("~")
 
+    config = {}
+
     if os.name == "posix":
-        with open(f"{home}/.config/pwyrc") as f:
-            key = f.readline()
-
-        return key
+        with open(f"{home}/.config/pwy.json") as f:
+            data = json.load(f)
+            for key, value in data.items():
+                config[key] = value
+        return config
     else:
-        with open(f"{home}\.pwyrc") as f:
-            key = f.readline()
-
-        return key
+        with open(f"{home}\pwy.json") as f:
+            data = json.load(f)
+            for key, value in data.items():
+                config[key] = value
+        return config
 
 
 def get_weather_data(location, unit, lang):
@@ -42,7 +46,7 @@ def get_weather_data(location, unit, lang):
 
     url = (
         f"https://api.openweathermap.org/data/2.5/weather?q={location}"
-        f"&appid={get_key()}&units={unit}&lang={lang}"
+        f"&appid={get_config_data()['api_key']}&units={unit}&lang={lang}"
     )
 
     try:
@@ -141,16 +145,7 @@ def get_localtime(info):
 def get_wind_direction(info):
     """Convert data['deg'] to cardinal directions."""
 
-    arrows = [
-        ":down_arrow:",
-        ":down-left_arrow:",
-        ":left_arrow:",
-        ":up-left_arrow:",
-        ":up_arrow:",
-        ":up-right_arrow:",
-        ":right_arrow:",
-        ":down-right_arrow:",
-    ]
+    arrows = ["↓", "↙", "←", "↖", "↑", "↗", "→", "↘"]
     direction = int((info["deg"] + 11.25) / 45)
 
     return arrows[direction % 8]
@@ -181,13 +176,18 @@ def configuration(config):
 
     home = os.path.expanduser("~")
 
-    if os.name == "posix":
-        key_file = open(f"{home}/.config/pwyrc", "w+")
-    else:
-        key_file = open(f"{home}\.pwyrc", "w+")
+    config = {}
+    config["api_key"] = input("Enter you OWM API key: ")
+    config["location"] = input("Enter your location: ")
+    config["unit"] = input("Enter unit (metric, imperial): ")
+    config["lang"] = input("Enter your language: ")
 
-    key_file.write(config)
-    key_file.close()
+    if os.name == "posix":
+        with open(f"{home}/.config/pwy.json", "w+") as f:
+            json.dump(config, f, indent=4)
+    else:
+        with open(f"{home}\pwy.json", "w+") as f:
+            json.dump(config, f, indent=4)
 
     return "[green]Configuration finished.[/]"
 
@@ -197,10 +197,10 @@ def main():
 
     parser = argparse.ArgumentParser(description="pwy - A simple weather tool")
 
-    parser.add_argument("location", nargs="*", help="input location")
     parser.add_argument(
-        "-c", "--config", dest="config", metavar="", help="configure pwy"
+        "location", nargs="*", default=f"{get_config_data()['location']}", help="input location"
     )
+    parser.add_argument("-c", "--config", action="store_true", help="configure pwy")
     parser.add_argument(
         "-u", "--unit", dest="unit", default="metric", metavar="", help="input unit"
     )
@@ -213,12 +213,12 @@ def main():
 
     args = parser.parse_args()
 
-    location = " ".join(args.location)
+    location = " ".join(args.location) if len(sys.argv) > 1 else args.location
     config = args.config
     unit = args.unit
     lang = args.language
 
-    if config is not None:
+    if config:
         print(configuration(config))
     else:
         info = get_weather_data(location, unit, lang)
