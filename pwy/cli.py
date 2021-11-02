@@ -21,21 +21,21 @@ from pwy._version import __version__
 
 
 def get_config_data():
-    """Read the user's OWM API key from the .pwyrc file"""
-
-    home = os.path.expanduser("~")
+    """Read the user's OWM API key from the pwy.json file"""
 
     config = {}
 
+    home = os.path.expanduser("~")
+
     if os.name == "posix":
-        with open(f"{home}/.config/pwy.json") as f:
-            data = json.load(f)
+        with open(f"{home}/.config/pwy.json") as pwy_json:
+            data = json.load(pwy_json)
             for key, value in data.items():
                 config[key] = value
         return config
     else:
-        with open(f"{home}\pwy.json") as f:
-            data = json.load(f)
+        with open(f"{home}\pwy.json") as pwy_json:
+            data = json.load(pwy_jsoon)
             for key, value in data.items():
                 config[key] = value
         return config
@@ -171,23 +171,24 @@ def display_weather_info(info):
     )
 
 
-def configuration(config):
-    """Configure OWM API key and save it in the .pwyrc file."""
-
-    home = os.path.expanduser("~")
+def configuration():
+    """Configure OWM API key and save it in the pwy.json file."""
 
     config = {}
+
     config["api_key"] = input("Enter you OWM API key: ")
     config["location"] = input("Enter your location: ")
     config["unit"] = input("Enter unit (metric, imperial): ")
     config["lang"] = input("Enter your language: ")
 
+    home = os.path.expanduser("~")
+
     if os.name == "posix":
-        with open(f"{home}/.config/pwy.json", "w+") as f:
-            json.dump(config, f, indent=4)
+        with open(f"{home}/.config/pwy.json", "w+") as pwy_json:
+            json.dump(config, pwy_json, indent=4)
     else:
-        with open(f"{home}\pwy.json", "w+") as f:
-            json.dump(config, f, indent=4)
+        with open(f"{home}\pwy.json", "w+") as pwy_json:
+            json.dump(config, pwy_json, indent=4)
 
     return "[green]Configuration finished.[/]"
 
@@ -195,31 +196,51 @@ def configuration(config):
 def main():
     """Get user arguments."""
 
-    parser = argparse.ArgumentParser(description="pwy - A simple weather tool")
+    try:
+        parser = argparse.ArgumentParser(
+            description="pwy - A simple weather information tool"
+        )
 
-    parser.add_argument(
-        "location", nargs="*", default=f"{get_config_data()['location']}", help="input location"
-    )
-    parser.add_argument("-c", "--config", action="store_true", help="configure pwy")
-    parser.add_argument(
-        "-u", "--unit", dest="unit", default="metric", metavar="", help="input unit"
-    )
-    parser.add_argument(
-        "-l", "--lang", dest="language", default="en", metavar="", help="input language"
-    )
-    parser.add_argument(
-        "-v", "--version", action="version", version=f"pwy {__version__}"
-    )
+        data = get_config_data()
 
-    args = parser.parse_args()
+        parser.add_argument(
+            "location",
+            nargs="*",
+            default=f"{data['location']}",
+            help="input location",
+        )
+        parser.add_argument("-c", "--config", action="store_true", help="configure pwy")
+        parser.add_argument(
+            "-u",
+            "--unit",
+            dest="unit",
+            default=f"{data['unit']}",
+            metavar="",
+            help="input unit",
+        )
+        parser.add_argument(
+            "-l",
+            "--lang",
+            dest="language",
+            default=f"{data['lang']}",
+            metavar="",
+            help="input language",
+        )
+        parser.add_argument(
+            "-v", "--version", action="version", version=f"pwy {__version__}"
+        )
 
-    location = " ".join(args.location) if len(sys.argv) > 1 else args.location
-    config = args.config
-    unit = args.unit
-    lang = args.language
+        args = parser.parse_args()
+        location = " ".join(args.location) if len(sys.argv) > 1 else args.location
+        config = args.config
+        unit = args.unit
+        lang = args.language
 
-    if config:
-        print(configuration(config))
-    else:
-        info = get_weather_data(location, unit, lang)
-        print(display_weather_info(info))
+        if config:
+            print(configuration())
+        else:
+            info = get_weather_data(location, unit, lang)
+            print(display_weather_info(info))
+    except FileNotFoundError:
+        print("[orange1]pwy.json does not exist.[/]\n")
+        print(configuration())
