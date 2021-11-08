@@ -5,6 +5,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
+## 1.4.5 - 2021.11.09
+* Replaced `pwyrc` with `pwy.json`.
+	* pwy.json
+		* Set OWM API key.
+		* Set default location.
+		* Set default unit.
+		* Set default language.
+* Ability to display weather using the `pwy` command.
+	* pwy reads the values set in the pwy.json file.
+	* If there is/are arguments, `pwy` will satisfy the arguments.
+* Minor code cleanup.
+
+
 ## 1.4.4 - 2021.09.30
 * Implemented rich.
 * Replaced colours.py with rich library.
