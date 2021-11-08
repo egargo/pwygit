@@ -7,10 +7,10 @@ README = open("README.md").read()
 setup(
     name="pwy",
     version=__version__,
-    description="A simple weather tool.",
+    description="A simple weather information tool",
     long_description=README,
     long_description_content_type="text/markdown",
-    url="https://github.com/noqqlint/pwy",
+    url="https://github.com/cliegargo/pwy",
     author="Clint",
     license="GPLv3",
     classifiers=[
