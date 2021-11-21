@@ -176,10 +176,10 @@ def configuration():
 
     config = {}
 
-    config["api_key"] = input("Enter you OWM API key: ")
-    config["location"] = input("Enter your location: ")
-    config["unit"] = input("Enter unit (metric, imperial): ")
-    config["lang"] = input("Enter your language: ")
+    config["api_"] = input("OWM API key            : ")
+    config["loca"] = input("Location               : ")
+    config["unit"] = input("Unit (metric/imperial) : ") or "metric"
+    config["lang"] = input("Language               : ") or "en"
 
     home = os.path.expanduser("~")
 
