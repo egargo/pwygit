@@ -176,8 +176,8 @@ def configuration():
 
     config = {}
 
-    config["api_"] = input("OWM API key            : ")
-    config["loca"] = input("Location               : ")
+    config["api_key"] = input("OWM API key            : ")
+    config["location"] = input("Location               : ")
     config["unit"] = input("Unit (metric/imperial) : ") or "metric"
     config["lang"] = input("Language               : ") or "en"
 
