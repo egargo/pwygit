@@ -35,7 +35,7 @@ def get_config_data():
         return config
     else:
         with open(f"{home}\pwy.json") as pwy_json:
-            data = json.load(pwy_jsoon)
+            data = json.load(pwy_json)
             for key, value in data.items():
                 config[key] = value
         return config
