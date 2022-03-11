@@ -1,7 +1,7 @@
 <div align="center">
     <h1>pwy</h1>
     <p>A simple weather information tool.</p>
-    <img src="https://raw.githubusercontent.com/cliegargo/cliegargo.github.io/master/images/pwy.png"><br>
+    <img src="pwy.png"><br>
     <a href="https://pypi.org/project/pwy"><img src="https://img.shields.io/pypi/v/pwy"></a>
     <a href="https://openweathermap.org/api"><img src="https://img.shields.io/badge/openweathermap-api-blue"></a>
     <a href="#"><img src="https://static.pepy.tech/personalized-badge/pwy?period=total&units=none&left_color=grey&right_color=blue&left_text=downloads"></a>
