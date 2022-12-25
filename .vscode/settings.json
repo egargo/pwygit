@@ -1,0 +1,21 @@
+{
+  "workbench.editorAssociations": [
+    {
+      "viewType": "jupyter.notebook.ipynb",
+      "filenamePattern": "*.ipynb"
+    }
+  ],
+  "git.confirmSync": false,
+  "editor.formatOnPaste": true,
+  "editor.formatOnSave": true,
+  "python.formatting.provider": "autopep8",
+  "explorer.confirmDelete": false,
+  "python.showStartPage": false,
+  "explorer.confirmDragAndDrop": false,
+  "python.linting.pylintArgs": ["--load-plugins=pylint_django"],
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.python"
+  }
+}
