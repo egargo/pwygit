@@ -1,3 +1,26 @@
+# MIT License
+#
+# Copyright (c) cegargo
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
+
 import os
 import sys
 import argparse
@@ -7,17 +30,13 @@ import datetime
 from rich import print
 
 from pwy.translation import TRANSLATIONS_JSON
-from pwy.ascii import (
-    clear_sky,
-    few_clouds,
-    overcast_cloud,
-    rain,
-    thunderstorm,
-    snow,
-    mist,
-    unknown,
-)
-from pwy._version import __version__
+from pwy.ascii import (clear_sky, few_clouds, overcast_cloud,
+                       rain, thunderstorm, snow, mist, unknown)
+from pwy.__version__ import __version__
+
+
+home = os.path.expanduser("~")
+path = f"{home}/.config/pwy.json" if os.name == "posix" else f"{home}\pwy.json"
 
 
 def get_config_data():
@@ -25,20 +44,11 @@ def get_config_data():
 
     config = {}
 
-    home = os.path.expanduser("~")
+    with open(path) as pwy_json:
+        data = json.load(pwy_json)
+        config = {key: value for key, value in data.items()}
 
-    if os.name == "posix":
-        with open(f"{home}/.config/pwy.json") as pwy_json:
-            data = json.load(pwy_json)
-            for key, value in data.items():
-                config[key] = value
-        return config
-    else:
-        with open(f"{home}\pwy.json") as pwy_json:
-            data = json.load(pwy_json)
-            for key, value in data.items():
-                config[key] = value
-        return config
+    return config
 
 
 def get_weather_data(location, unit, lang):
@@ -181,14 +191,8 @@ def configuration():
     config["unit"] = input("Unit (metric/imperial) : ") or "metric"
     config["lang"] = input("Language               : ") or "en"
 
-    home = os.path.expanduser("~")
-
-    if os.name == "posix":
-        with open(f"{home}/.config/pwy.json", "w+") as pwy_json:
-            json.dump(config, pwy_json, indent=4)
-    else:
-        with open(f"{home}\pwy.json", "w+") as pwy_json:
-            json.dump(config, pwy_json, indent=4)
+    with open(path, "w+") as pwy_json:
+        json.dump(config, pwy_json, indent=4)
 
     return "[green]Configuration finished.[/]"
 
@@ -209,13 +213,14 @@ def main():
             default=f"{data['location']}",
             help="input location",
         )
-        parser.add_argument("-c", "--config", action="store_true", help="configure pwy")
+        parser.add_argument(
+            "-c", "--config", action="store_true", help="configure pwy")
         parser.add_argument(
             "-u",
             "--unit",
             dest="unit",
             default=f"{data['unit']}",
-            metavar="",
+            metavar="\b",
             help="input unit",
         )
         parser.add_argument(
@@ -223,7 +228,7 @@ def main():
             "--lang",
             dest="language",
             default=f"{data['lang']}",
-            metavar="",
+            metavar="\b",
             help="input language",
         )
         parser.add_argument(
@@ -231,7 +236,8 @@ def main():
         )
 
         args = parser.parse_args()
-        location = " ".join(args.location) if len(sys.argv) > 1 else args.location
+        location = " ".join(args.location) if len(
+            sys.argv) > 1 else args.location
         config = args.config
         unit = args.unit
         lang = args.language
