@@ -5,7 +5,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## 2.1.2 - 2022.12.25
+## [Unreleased]
+
+## [2.1.2] - 2022.12.25
 
 - Changed license from GPLv3 to [MIT](./LICENSE).
   - Added MIT License notice to source code files
@@ -24,7 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed KeyError in cli.py
 - Added default value when configuring unit and language for `pwy.json`.
 
-## 1.4.5 - 2021.11.09
+## [1.4.5] - 2021.11.09
 
 - Replaced `pwyrc` with `pwy.json`.
   - pwy.json
@@ -37,7 +39,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - If there is/are arguments, `pwy` will satisfy the arguments.
 - Minor code cleanup.
 
-## 1.4.4 - 2021.09.30
+## [1.4.4] - 2021.09.30
 
 - Implemented rich.
 - Replaced colours.py with rich library.
@@ -45,7 +47,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Formatted using black module.
 - Minor code cleanup
 
-## 1.4.3 - 2021.09.26
+## [1.4.3] - 2021.09.26
 
 - Added default value to the arguments and removed the unnecessary if else.
 - Removed the unnecessary f-strings
@@ -53,7 +55,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Moved `.pwyrc` to `~/.config/pwyrc` (in Unix-like OS).
 - Minor code refactor.
 
-## 1.4.2 - 2021.09.17
+## [1.4.2] - 2021.09.17
 
 - Moved `__main__.py` to `cli.py`.
 - Added `_version.py`.
@@ -62,12 +64,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `--config` argument to setup pwy.
 - API key is now stored in `.pwyrc`.
 
-## ~~1.4.1 - 2021.08.27 (Yanked)~~
+## 1.4.1 - 2021.08.27 [YANKED]
 
-- ~~Changed `key.py` to `key.json`~~
-- ~~Removed the `main` function and its contents to `if __name__ == "__main__`.~~
+- Changed `key.py` to `key.json`
+- Removed the `main` function and its contents to `if __name__ == "__main__`.
 
-## 1.4.0 - 2021.06.26
+## [1.4.0] - 2021.06.26
 
 - Separated get_ascii() and get_weather_translation().
 - Removed the output labels.
@@ -117,7 +119,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added Moderate Rain translation.
 - Added local time (24 hour format) and time zone.
 
-## 1.0.0 - 2021.06.03
+## [1.0.0] - 2021.06.03
 
 - Name change from `wwy` to `pwy`.
 - Revamped UI.
@@ -129,30 +131,38 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Missing weather translations for Moderate Rain, Heavy Rain, Thunderstorm, Snow, and Snow.
   - No translations for Arabic, Persian, and Hebrews languages.
 
-## ~0.1.4~
+## 0.1.4
 
 - Minor typo fix.
 
-## ~0.1.3~
+## 0.1.3
 
 - Changed .format() to f-string.
 - Added wind speed information.
 
-## ~0.1.2~
+## 0.1.2
 
 - Fixed the incorrect ASCII art.
 
-## ~0.1.1~
+## 0.1.1
 
 - Minor fixes.
 
-## ~0.1.0~
+## 0.1.0
 
 - Added -u parameter for the units (metric, imperial).
 - Changed the city name from optional argument to positional argument.
 
-## ~0.0.12~
+## 0.0.12
 
 - Fixed missing 'light_rain' ASCII art.
 - Fixed name 'light_rain' is not defined.
 - Added Mist ASCII art.
+
+[Unreleased]: https://github.com/egargo/pwygit/compare/2.1.2...HEAD
+[2.1.2]: https://github.com/egargo/pwygit/compare/1.4.5...2.1.2
+[1.4.5]: https://github.com/egargo/pwygit/compare/1.4.4...1.4.5
+[1.4.4]: https://github.com/egargo/pwygit/compare/1.4.3...1.4.4
+[1.4.3]: https://github.com/egargo/pwygit/compare/1.4.2...1.4.3
+[1.4.2]: https://github.com/egargo/pwygit/compare/1.4.0...1.4.2
+[1.4.0]: https://github.com/egargo/pwygit/releases/tag/1.4.0
