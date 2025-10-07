@@ -60,51 +60,56 @@ def get_weather_data(location, unit, lang):
     )
 
     try:
-        response = requests.get(url)
+        response = requests.get(url, timeout=10)
         response.raise_for_status()
-    except requests.HTTPError:
-        status = response.status_code
+    except requests.exceptions.HTTPError as http_err:
+        status = response.status_code if response else None
         if status == 401:
-            print("[orange1]Invalid API key.[/]")
+            print("[orange1]Error: Invalid API key.[/]")
         elif status == 404:
-            print("[orange1]Invalid input. See pwy -h for more information.[/]")
-        elif status in (429, 443):
-            print("[orange1]API calls per minute exceeded.[/]")
-
+            print("[orange1]Error: Location not found. Please check your input or see pwy -h for help.[/]")
+        elif status == 429:
+            print("[orange1]Error: API rate limit exceeded. Please wait and try again.[/]")
+        else:
+            print(f"[orange1]HTTP error occurred: {http_err}[/]")
+        sys.exit(1)
+    except requests.exceptions.ConnectionError:
+        print("[orange1]Error: Network problem (connection error). Please check your internet connection.[/]")
+        sys.exit(1)
+    except requests.exceptions.Timeout:
+        print("[orange1]Error: Request timed out. Please try again later.[/]")
+        sys.exit(1)
+    except requests.exceptions.RequestException as err:
+        print(f"[orange1]Unexpected error: {err}[/]")
         sys.exit(1)
 
-    data = response.json()
+    try:
+        data = response.json()
+    except ValueError:
+        print("[orange1]Error: Unable to parse response from server.[/]")
+        sys.exit(1)
 
-    weather_info = {
-        "name": data["name"],
-        "country": data["sys"]["country"],
-        "temp": data["main"]["temp"],
-        "feels_like": data["main"]["feels_like"],
-        "main": data["weather"][0]["main"],
-        "description": data["weather"][0]["description"].title(),
-        "pressure": data["main"]["pressure"],
-        "humidity": data["main"]["humidity"],
-        "speed": data["wind"]["speed"],
-        "deg": data["wind"]["deg"],
-        "timezone": data["timezone"],
-        "unit": unit,
-        "lang": lang,
-    }
+    try:
+        weather_info = {
+            "name": data["name"],
+            "country": data["sys"]["country"],
+            "temp": data["main"]["temp"],
+            "feels_like": data["main"]["feels_like"],
+            "main": data["weather"][0]["main"],
+            "description": data["weather"][0]["description"].title(),
+            "pressure": data["main"]["pressure"],
+            "humidity": data["main"]["humidity"],
+            "speed": data["wind"]["speed"],
+            "deg": data["wind"]["deg"],
+            "timezone": data["timezone"],
+            "unit": unit,
+            "lang": lang,
+        }
+    except (KeyError, IndexError) as e:
+        print(f"[orange1]Error: Unexpected response format ({e}).[/]")
+        sys.exit(1)
 
     return weather_info
-
-
-def get_weather_translation(info):
-    """Translate the current weather's description into the user's language."""
-
-    LANGUAGES = json.loads(TRANSLATIONS_JSON)
-
-    if info["lang"] in LANGUAGES["LANGUAGES"]:
-        language = LANGUAGES["TRANSLATIONS"][0][info["lang"]]
-    else:
-        print("[orange1]Invalid input. See pwy -h for more information.[/]")
-
-    return language
 
 
 def get_ascii(info):
